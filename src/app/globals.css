@@ -7,57 +7,41 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
 html { scroll-behavior: smooth; }
-
-body {
-  background: #0A0A0A;
-  color: #F5F2EE;
-  font-family: 'DM Sans', sans-serif;
-  overflow-x: hidden;
-}
-
-/* Parallax sections */
-.parallax-section {
-  position: relative;
-  min-height: 100vh;
-  background-attachment: fixed;
-  background-size: cover;
-  background-position: center;
-}
-
-.parallax-overlay {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
+body { background: #0A0A0A; color: #F5F2EE; font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
 
 @keyframes pulse {
   0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
   100% { transform: translate(-50%, -50%) scale(2.8); opacity: 0; }
 }
-
 @keyframes introFade {
   0% { opacity: 1; pointer-events: all; }
   100% { opacity: 0; pointer-events: none; }
 }
-
 @keyframes logoReveal {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
-@keyframes ballDrop {
-  from { top: -80px; opacity: 1; }
-  to { top: 50%; opacity: 0; transform: translate(-50%, -50%) scale(3); }
-}
-
 @keyframes scrollBob {
   0%, 100% { transform: translateX(-50%) translateY(0); }
   50% { transform: translateX(-50%) translateY(8px); }
 }
 
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
+@media (max-width: 768px) {
+  #courts { padding: 3rem 1rem !important; }
+  #league { padding: 3rem 1rem !important; }
+  #experiences { padding: 3rem 1rem !important; }
+  #about { padding: 3rem 1rem !important; }
+  .about-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
+  .about-values { grid-template-columns: 1fr !important; }
+  .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 2rem !important; }
+  .footer-stats { gap: 1.5rem !important; }
+  .footer-bottom { flex-direction: column !important; text-align: center !important; gap: 0.75rem !important; }
+  .exp-grid { grid-template-columns: 1fr !important; }
+  .courts-grid { grid-template-columns: 1fr !important; }
+  .leader-inner { grid-template-columns: 1fr !important; gap: 2rem !important; }
+}
+
+@media (max-width: 480px) {
+  .footer-grid { grid-template-columns: 1fr !important; }
 }

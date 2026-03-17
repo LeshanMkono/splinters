@@ -1,0 +1,87 @@
+/* ── MOBILE RESPONSIVE — Splinters ── */
+
+/* Navbar */
+@media (max-width: 768px) {
+  nav {
+    padding: 0.6rem 1rem !important;
+  }
+  nav img {
+    height: 36px !important;
+    width: 36px !important;
+  }
+  nav span {
+    font-size: 1rem !important;
+    letter-spacing: 2px !important;
+  }
+  /* Hide center nav links on mobile */
+  nav > div {
+    display: none !important;
+  }
+  nav a:last-child {
+    padding: 0.4rem 0.85rem !important;
+    font-size: 0.75rem !important;
+  }
+}
+
+/* Map Hero */
+@media (max-width: 768px) {
+  /* Search bar */
+  #map .search-bar {
+    padding: 0.5rem 1rem !important;
+  }
+  /* Court pins — scale down */
+  #map section > div {
+    font-size: 7px !important;
+  }
+  /* Bottom chips */
+  #map .chips {
+    padding: 0.4rem 0.5rem !important;
+  }
+}
+
+/* Courts section */
+@media (max-width: 768px) {
+  #courts {
+    padding: 3rem 1rem !important;
+  }
+  #courts > div > div:first-child {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+}
+
+/* Leaderboard */
+@media (max-width: 768px) {
+  #league {
+    padding: 3rem 1rem !important;
+  }
+}
+
+/* Experiences */
+@media (max-width: 768px) {
+  #experiences {
+    padding: 3rem 1rem !important;
+  }
+  #experiences > div > div > div:last-child {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* About */
+@media (max-width: 768px) {
+  #about {
+    padding: 3rem 1rem !important;
+  }
+  #about .grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+}
+
+/* Footer */
+@media (max-width: 768px) {
+  footer > div > div > div:first-child {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1.5rem !important;
+  }
+}
