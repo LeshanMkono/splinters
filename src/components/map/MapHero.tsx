@@ -51,7 +51,10 @@ export default function MapHero() {
       zoom: 12,
       mapId: "splinters_nairobi",
       disableDefaultUI: true,
-      zoomControl: true,
+zoomControl: true,
+zoomControlOptions: {
+  position: window.google.maps.ControlPosition.RIGHT_CENTER,
+},
       styles: [
         { elementType: "geometry", stylers: [{ color: "#0a0a0a" }] },
         { elementType: "labels.text.stroke", stylers: [{ color: "#0a0a0a" }] },
@@ -165,8 +168,8 @@ export default function MapHero() {
       )}
       <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 40, padding: "0.5rem 0.75rem 0.75rem" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-          <button onClick={() => setChipStart(Math.max(0, chipStart - 1))} disabled={!canPrev}
-            style={{ width: "28px", height: "28px", borderRadius: "50%", background: canPrev ? "rgba(232,87,12,0.9)" : "rgba(255,255,255,0.1)", border: "none", color: canPrev ? "#111" : "rgba(255,255,255,0.2)", cursor: canPrev ? "pointer" : "default", flexShrink: 0, fontSize: "1rem", display: "flex", alignItems: "center", justifyContent: "center" }}>‹</button>
+          <button onClick={() => canPrev && setChipStart(Math.max(0, chipStart - 1))}
+            style={{ width: "28px", height: "28px", borderRadius: "50%", background: canPrev ? "rgba(232,87,12,0.9)" : "rgba(255,255,255,0.08)", border: "1px solid " + (canPrev ? "rgba(232,87,12,0.5)" : "rgba(255,255,255,0.1)"), color: canPrev ? "#111" : "rgba(255,255,255,0.25)", cursor: canPrev ? "pointer" : "default", flexShrink: 0, fontSize: "1rem", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.2s" }}>‹</button>
           <div style={{ display: "flex", gap: "0.4rem", flex: 1, overflow: "hidden" }}>
             {courts.map((court, idx) => {
               const pos = idx - chipStart;
@@ -192,8 +195,8 @@ export default function MapHero() {
               );
             })}
           </div>
-          <button onClick={() => setChipStart(Math.min(courts.length - 5, chipStart + 1))} disabled={!canNext}
-            style={{ width: "28px", height: "28px", borderRadius: "50%", background: canNext ? "rgba(232,87,12,0.9)" : "rgba(255,255,255,0.1)", border: "none", color: canNext ? "#111" : "rgba(255,255,255,0.2)", cursor: canNext ? "pointer" : "default", flexShrink: 0, fontSize: "1rem", display: "flex", alignItems: "center", justifyContent: "center" }}>›</button>
+          <button onClick={() => canNext && setChipStart(Math.min(courts.length - 5, chipStart + 1))}
+            style={{ width: "28px", height: "28px", borderRadius: "50%", background: canNext ? "rgba(232,87,12,0.9)" : "rgba(255,255,255,0.08)", border: "1px solid " + (canNext ? "rgba(232,87,12,0.5)" : "rgba(255,255,255,0.1)"), color: canNext ? "#111" : "rgba(255,255,255,0.25)", cursor: canNext ? "pointer" : "default", flexShrink: 0, fontSize: "1rem", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.2s" }}>›</button>
         </div>
       </div>
     </section>

@@ -13,9 +13,24 @@ export default function Home() {
       <IntroAnimation />
       <Navbar />
       <MapHero />
-      <Courts />
-      <Leaderboard />
-      <Experiences />
+      <div style={{ position: "relative" }}>
+        <div style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 0,
+          backgroundImage: "url('/bg-edwards.webp')",
+          backgroundSize: "cover",
+          backgroundPosition: "center top",
+          backgroundAttachment: "fixed",
+          filter: "brightness(0.08) saturate(1.5)",
+          pointerEvents: "none",
+        }} />
+        <div style={{ position: "relative", zIndex: 2 }}>
+          <Courts />
+          <Leaderboard />
+          <Experiences />
+        </div>
+      </div>
       <About />
       <Footer />
     </main>

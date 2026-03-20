@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
 
 :root {
@@ -44,4 +45,55 @@ body { background: #0A0A0A; color: #F5F2EE; font-family: 'DM Sans', sans-serif; 
 
 @media (max-width: 480px) {
   .footer-grid { grid-template-columns: 1fr !important; }
+}
+/* ── MOBILE CAROUSEL — 1 card visible, others peek ── */
+@media (max-width: 768px) {
+
+  /* Courts grid → horizontal scroll carousel */
+  #courts .courts-mobile-wrap {
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    gap: 1rem;
+    padding: 0 1rem;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  #courts .courts-mobile-wrap::-webkit-scrollbar { display: none; }
+  #courts .courts-mobile-wrap > div {
+    scroll-snap-align: center;
+    flex: 0 0 85%;
+    min-width: 85%;
+  }
+
+  /* Experiences grid → carousel */
+  #experiences .exp-mobile-wrap {
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    gap: 1rem;
+    padding: 0 1rem;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  #experiences .exp-mobile-wrap > div {
+    scroll-snap-align: center;
+    flex: 0 0 85%;
+    min-width: 85%;
+  }
+
+  /* About values strip → carousel */
+  .about-values {
+    display: flex !important;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    gap: 1rem;
+    padding: 0 0.5rem;
+    scrollbar-width: none;
+  }
+  .about-values > div {
+    scroll-snap-align: center;
+    flex: 0 0 85%;
+    min-width: 85%;
+  }
 }
