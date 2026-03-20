@@ -16,10 +16,10 @@ function Stars({ rating }: { rating: number }) {
 }
 
 export default function Courts() {
-  const [courts, setCourts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [activeIdx, setActiveIdx] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
+  const [courts, setCourts] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [activeIdx, setActiveIdx] = useState<number>(0);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
   const scrollRef = useRef(null);
 
   useEffect(() => {

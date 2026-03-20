@@ -56,8 +56,8 @@ export default function Experiences() {
           {experiences.map((exp, i) => (
             <div key={exp.title}
               style={{ background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "16px", overflow: "hidden", backdropFilter: "blur(8px)", display: "flex", flexDirection: "column", transition: "transform 0.2s, border-color 0.2s" }}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(232,87,12,0.5)"; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.1)"; }}>
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(232,87,12,0.5)"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.1)"; }}>
 
               <div style={{ position: "relative", height: "200px", overflow: "hidden" }}>
                 <img src={exp.image} alt={exp.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
