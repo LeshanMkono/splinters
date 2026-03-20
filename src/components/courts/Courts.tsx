@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { supabase } from "@/lib/supabase";
 
-const COMMUNITY = "254700000000";
+const COMMUNITY = "https://chat.whatsapp.com/E7QXYugRtYACCBkssPtGKS";
 
 function Stars({ rating }: { rating: number }) {
   return (
@@ -116,7 +116,7 @@ export default function Courts() {
               Book Court
             </a>
           )}
-          <a href={"https://wa.me/" + COMMUNITY} target="_blank" rel="noopener noreferrer"
+          <a href={"https://chat.whatsapp.com/E7QXYugRtYACCBkssPtGKS"} target="_blank" rel="noopener noreferrer"
             style={{ flex: 1, background: "rgba(37,211,102,0.1)", color: "#25D366", padding: "0.6rem 0", borderRadius: "100px", textDecoration: "none", fontSize: "0.78rem", fontWeight: "500", textAlign: "center", border: "1px solid rgba(37,211,102,0.25)" }}>
             💬 Join Group
           </a>
@@ -139,7 +139,7 @@ export default function Courts() {
             <div style={{ fontSize: "0.65rem", letterSpacing: "3px", textTransform: "uppercase", color: "#E8570C", marginBottom: "0.5rem" }}>Nairobi · 63+ Courts</div>
             <div style={{ fontWeight: "bold", fontSize: "clamp(2rem,5vw,3.5rem)", color: "#F5F2EE", lineHeight: 1 }}>FEATURED COURTS</div>
           </div>
-          <a href={"https://wa.me/" + COMMUNITY} target="_blank" rel="noopener noreferrer"
+          <a href={"https://chat.whatsapp.com/E7QXYugRtYACCBkssPtGKS"} target="_blank" rel="noopener noreferrer"
             style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "rgba(37,211,102,0.12)", border: "1px solid rgba(37,211,102,0.3)", color: "#25D366", padding: "0.65rem 1.25rem", borderRadius: "100px", textDecoration: "none", fontSize: "0.8rem", fontWeight: "500" }}>
             💬 Splinters Community
           </a>
@@ -185,7 +185,7 @@ export default function Courts() {
         <div style={{ textAlign: "center", marginTop: "2rem", padding: "3rem", background: "rgba(232,87,12,0.05)", border: "1px solid rgba(232,87,12,0.15)", borderRadius: "20px" }}>
           <div style={{ fontWeight: "bold", fontSize: "1.5rem", color: "#F5F2EE", marginBottom: "0.5rem" }}>Is your court on Splinters?</div>
           <div style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.4)", marginBottom: "1.5rem" }}>Partner with us and get your court in front of thousands of Nairobi players and international visitors.</div>
-          <a href={"https://wa.me/" + COMMUNITY} target="_blank" rel="noopener noreferrer"
+          <a href={"https://chat.whatsapp.com/E7QXYugRtYACCBkssPtGKS"} target="_blank" rel="noopener noreferrer"
             style={{ display: "inline-block", background: "#E8570C", color: "#111", padding: "0.75rem 2rem", borderRadius: "100px", textDecoration: "none", fontSize: "0.85rem", fontWeight: "500" }}>
             Partner With Us
           </a>

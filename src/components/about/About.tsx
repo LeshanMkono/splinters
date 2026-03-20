@@ -47,7 +47,7 @@ export default function About() {
               <a href="#courts" style={{ background: "#E8570C", color: "#111", padding: "0.75rem 1.75rem", borderRadius: "100px", textDecoration: "none", fontSize: "0.85rem", fontWeight: "500" }}
                 onMouseEnter={e => (e.currentTarget.style.opacity = "0.85")}
                 onMouseLeave={e => (e.currentTarget.style.opacity = "1")}>Find a Court</a>
-              <a href="https://wa.me/254700000000" target="_blank" rel="noopener noreferrer"
+              <a href="https://chat.whatsapp.com/E7QXYugRtYACCBkssPtGKS" target="_blank" rel="noopener noreferrer"
                 style={{ background: "transparent", color: "#25D366", padding: "0.75rem 1.75rem", borderRadius: "100px", textDecoration: "none", fontSize: "0.85rem", fontWeight: "500", border: "1px solid rgba(37,211,102,0.4)" }}
                 onMouseEnter={e => (e.currentTarget.style.background = "rgba(37,211,102,0.1)")}
                 onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>💬 Join Community</a>

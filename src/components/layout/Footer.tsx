@@ -16,7 +16,7 @@ export default function Footer() {
             <p style={{ fontSize: "0.82rem", color: "rgba(255,255,255,0.4)", lineHeight: 1.8, marginBottom: "1.5rem", maxWidth: "280px" }}>
               Every basketball court in Nairobi, mapped. Discover, book, and connect with the city basketball community.
             </p>
-            <a href="https://wa.me/254700000000" target="_blank" rel="noopener noreferrer"
+            <a href="https://chat.whatsapp.com/E7QXYugRtYACCBkssPtGKS" target="_blank" rel="noopener noreferrer"
               style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "rgba(37,211,102,0.15)", border: "1px solid rgba(37,211,102,0.3)", color: "#25D366", padding: "0.6rem 1.25rem", borderRadius: "100px", textDecoration: "none", fontSize: "0.8rem", fontWeight: "500" }}
               onMouseEnter={e => (e.currentTarget.style.background = "rgba(37,211,102,0.25)")}
               onMouseLeave={e => (e.currentTarget.style.background = "rgba(37,211,102,0.15)")}>
