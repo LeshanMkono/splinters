@@ -4,7 +4,7 @@ import { supabase } from "@/lib/supabase";
 
 const COMMUNITY = "254700000000";
 
-function Stars({ rating }) {
+function Stars({ rating }: { rating: number }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "3px" }}>
       {[1,2,3,4,5].map(s => (
