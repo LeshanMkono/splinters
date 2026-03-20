@@ -22,11 +22,25 @@ export default function Footer() {
               onMouseLeave={e => (e.currentTarget.style.background = "rgba(37,211,102,0.15)")}>
               💬 Join WhatsApp Community
             </a>
+            <div style={{ display: "flex", gap: "0.75rem", marginTop: "1rem" }}>
+              <a href="https://www.instagram.com/splinters_basketball_?igsh=MWx1NGJhcWV5OGQ0Yg==" target="_blank" rel="noopener noreferrer"
+                style={{ display: "flex", alignItems: "center", gap: "0.4rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.5)", padding: "0.45rem 0.9rem", borderRadius: "100px", textDecoration: "none", fontSize: "0.72rem", transition: "all 0.2s" }}
+                onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(232,87,12,0.5)"; (e.currentTarget as HTMLAnchorElement).style.color = "#E8570C"; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.1)"; (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.5)"; }}>
+                📸 Instagram
+              </a>
+              <a href="https://www.tiktok.com/@splintersbasketball_ke?_r=1&_t=ZS-94qXL8SUvdg" target="_blank" rel="noopener noreferrer"
+                style={{ display: "flex", alignItems: "center", gap: "0.4rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.5)", padding: "0.45rem 0.9rem", borderRadius: "100px", textDecoration: "none", fontSize: "0.72rem", transition: "all 0.2s" }}
+                onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(232,87,12,0.5)"; (e.currentTarget as HTMLAnchorElement).style.color = "#E8570C"; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.1)"; (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.5)"; }}>
+                🎵 TikTok
+              </a>
+            </div>
           </div>
           <div>
             <div style={{ fontSize: "0.65rem", letterSpacing: "3px", textTransform: "uppercase", color: "#E8570C", marginBottom: "1.25rem" }}>Courts</div>
             {["Westlands", "Kasarani", "Karen", "Kibera", "Eastleigh", "CBD"].map(area => (
-              <a key={area} href="#courts" style={{ display: "block", fontSize: "0.82rem", color: "rgba(255,255,255,0.4)", textDecoration: "none", marginBottom: "0.6rem", transition: "color 0.2s" }}
+              <a key={area} href="/courts" style={{ display: "block", fontSize: "0.82rem", color: "rgba(255,255,255,0.4)", textDecoration: "none", marginBottom: "0.6rem", transition: "color 0.2s" }}
                 onMouseEnter={e => (e.currentTarget.style.color = "#E8570C")}
                 onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.4)")}>
                 {area}
