@@ -68,8 +68,8 @@ export default function CourtsPage() {
     const dist = getDistance(court);
     return (
       <div style={{ background: "#0D1117", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "14px", overflow: "hidden", transition: "all 0.25s", cursor: "pointer" }}
-        onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(232,87,12,0.4)"; (e.currentTarget as HTMLElement).style.transform = "translateY(-3px)"; }}
-        onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.07)"; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}>
+        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(232,87,12,0.4)"; (e.currentTarget as HTMLElement).style.transform = "translateY(-3px)"; }}
+        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.07)"; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}>
         <div style={{ height: "140px", background: "linear-gradient(135deg, #1a0800, #0d1b2a)", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", overflow: "hidden" }}>
           {court.image_url ? (
             <img src={court.image_url} alt={court.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
