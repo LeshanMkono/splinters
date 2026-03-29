@@ -10,8 +10,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "good-testimony-international-basketball-court","ridgeways-basketball-court",
     "karen-gated-basketball-court","kibera-community-basketball-court","lenana-school-basketball-court",
     "university-of-nairobi-basketball-court","braeburn-schools-basketball-court","umama-play-ground",
-    "ruiru-secondary-basketball-court","basketball-court-james-gichuru","kenya-academy-of-sports-basketball-court",
-    "basketball-court-melili","taarifa-road-sports-complex","uhuru-park-basketball-court",
+    "ruiru-secondary-basketball-court","basketball-court-james-gichuru",
+    "kenya-academy-of-sports-basketball-court","basketball-court-melili",
+    "taarifa-road-sports-complex","uhuru-park-basketball-court",
     "eastleigh-high-school-basketball-court","basketball-court-mai-mahiu",
   ];
 
