@@ -163,10 +163,13 @@ export default function PadelPage() {
   const [activeCategory, setActiveCategory] = useState("all");
 
   useEffect(() => {
-    if (mapLoaded || !mapRef.current) return;
+    if (typeof window === "undefined") return;
+    if ((window as any).google) { initMap(); return; }
+    if (document.querySelector('script[src*="maps.googleapis"]')) return;
     const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_KEY}&libraries=places`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_KEY}`;
     script.async = true;
+    script.defer = true;
     script.onload = () => { setMapLoaded(true); initMap(); };
     document.head.appendChild(script);
   }, []);
@@ -212,6 +215,34 @@ export default function PadelPage() {
   const totalCourts = allVenues.reduce((sum, v) => sum + v.courts, 0);
 
   return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: `{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Padel Courts in Nairobi, Kenya",
+  "description": "Complete directory of verified padel courts in Nairobi. 17 venues across Westlands, Gigiri, Karen, Lavington and Ridgeways.",
+  "url": "https://splinters.co.ke/padel",
+  "numberOfItems": 17,
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Networks Padel Village", "url": "https://maps.google.com/?q=Networks+Padel+Village+Gigiri+Nairobi"},
+    {"@type": "ListItem", "position": 2, "name": "The Padel Point Kenya", "url": "https://maps.google.com/?q=The+Padel+Point+Kenya+Ngong+Racecourse"},
+    {"@type": "ListItem", "position": 3, "name": "Rackets and Rounds", "url": "https://maps.google.com/?q=Rackets+Rounds+Westlands+Nairobi"},
+    {"@type": "ListItem", "position": 4, "name": "Padel 254 Goan Gymkhana", "url": "https://maps.google.com/?q=Padel+254+Goan+Gymkhana+Nairobi"},
+    {"@type": "ListItem", "position": 5, "name": "Gigiri Social Club", "url": "https://maps.google.com/?q=Gigiri+Social+Club+Nairobi"},
+    {"@type": "ListItem", "position": 6, "name": "Ridgeway Padel Club", "url": "https://maps.google.com/?q=Ridgeway+Padel+Club+Nairobi"},
+    {"@type": "ListItem", "position": 7, "name": "Padel Kenya Westlands", "url": "https://maps.google.com/?q=Padel+Kenya+Westlands+Nairobi"},
+    {"@type": "ListItem", "position": 8, "name": "PlayOn Padel Westlands", "url": "https://maps.google.com/?q=PlayOn+Padel+Rhapta+Road+Westlands"},
+    {"@type": "ListItem", "position": 9, "name": "Ace Padel Kenya", "url": "https://maps.google.com/?q=Ace+Padel+Kenya+Aga+Khan+Sports+Centre"},
+    {"@type": "ListItem", "position": 10, "name": "254 Racquet Club", "url": "https://maps.google.com/?q=254+Racquet+Club+Loresho+Nairobi"},
+    {"@type": "ListItem", "position": 11, "name": "Zen Padel Zen Garden", "url": "https://maps.google.com/?q=Zen+Padel+Zen+Garden+Kitisuru+Nairobi"},
+    {"@type": "ListItem", "position": 12, "name": "PlayOn Padel Lavington", "url": "https://maps.google.com/?q=PlayOn+Padel+Jaffery+Sports+Club+Lavington"},
+    {"@type": "ListItem", "position": 13, "name": "Arena Padel", "url": "https://maps.google.com/?q=Arena+Padel+Lavington+Nairobi"},
+    {"@type": "ListItem", "position": 14, "name": "PRO PADEL Nairobi", "url": "https://maps.google.com/?q=PRO+PADEL+Forest+Road+Nairobi"},
+    {"@type": "ListItem", "position": 15, "name": "SD Padel Gigiri Courtyard", "url": "https://maps.google.com/?q=SD+Padel+Gigiri+Courtyard+Nairobi"},
+    {"@type": "ListItem", "position": 16, "name": "Duma Padel Ole Sereni", "url": "https://maps.google.com/?q=Duma+Padel+Ole+Sereni+Mombasa+Road"},
+    {"@type": "ListItem", "position": 17, "name": "Destination Padel Tigoni", "url": "https://maps.google.com/?q=Destination+Padel+Tigoni+Kenya"}
+  ]
+}` }} />
     <main style={{ background: "#0A0A0A", minHeight: "100vh", color: "#F5F2EE", fontFamily: "DM Sans, sans-serif" }}>
       <Navbar />
       <div style={{ padding: "7rem 1.5rem 3rem", background: "linear-gradient(180deg, #0a1a00 0%, #0A0A0A 100%)", textAlign: "center" }}>
@@ -260,5 +291,6 @@ export default function PadelPage() {
         <a href="/courts" style={{ display: "inline-block", background: "#E8570C", color: "#111", padding: "0.75rem 2rem", borderRadius: "100px", textDecoration: "none", fontWeight: "700", fontSize: "0.85rem" }}>Find Basketball Courts →</a>
       </div>
     </main>
+    </>
   );
 }
