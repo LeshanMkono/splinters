@@ -1,8 +1,17 @@
 "use client";
 import { useState } from "react";
 
+const NAV_LINKS: [string, string][] = [
+  ["Courts", "/courts"],
+  ["Padel", "/padel"],
+  ["Experiences", "#experiences"],
+  ["League", "#league"],
+  ["About", "#about"],
+];
+
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <>
       <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0.75rem 1.5rem", background: "rgba(10,10,10,0.95)", backdropFilter: "blur(10px)" }}>
@@ -11,7 +20,7 @@ export default function Navbar() {
           <span style={{ color: "#E8570C", fontWeight: "bold", fontSize: "1.2rem", letterSpacing: "3px" }}>SPLINTERS</span>
         </a>
         <div className="nav-links" style={{ display: "flex", gap: "2rem", position: "absolute", left: "50%", transform: "translateX(-50%)" }}>
-          {[["Courts", "/courts"], ["Padel", "/padel"], ["Experiences", "#experiences"], ["League", "#league"], ["About", "#about"]].map(([item, href]) => (
+          {NAV_LINKS.map(([item, href]) => (
             <a key={item} href={href} style={{ color: "rgba(245,242,238,0.6)", textDecoration: "none", fontSize: "0.82rem", letterSpacing: "1px", textTransform: "uppercase", transition: "color 0.2s" }} onMouseEnter={e => (e.currentTarget.style.color = "#E8570C")} onMouseLeave={e => (e.currentTarget.style.color = "rgba(245,242,238,0.6)")}>{item}</a>
           ))}
         </div>
@@ -24,8 +33,8 @@ export default function Navbar() {
       </nav>
       {menuOpen && (
         <div style={{ position: "fixed", top: "60px", left: 0, right: 0, zIndex: 99, background: "rgba(10,10,10,0.98)", padding: "1rem 1.5rem", borderBottom: "1px solid rgba(232,87,12,0.2)", backdropFilter: "blur(10px)" }}>
-          {[["Courts", "/courts"], ["Padel", "/padel"], ["Experiences", "#experiences"], ["League", "#league"], ["About", "#about"]].map(([item, href]) => (
-            <a key={item} href={href} onClick={() => setMenuOpen(false)} style={{ display: "block", color: "rgba(245,242,238,0.7)", textDecoration: "none", fontSize: "1rem", letterSpacing: "1px", textTransform: "uppercase", padding: "0.85rem 0", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>{item}</a>
+          {NAV_LINKS.map(([item, href]) => (
+            <a key={item} href={href} onClick={() => setMenuOpen(false)} style={{ display: "block", color: item === "Padel" ? "#E8570C" : "rgba(245,242,238,0.7)", textDecoration: "none", fontSize: "1rem", letterSpacing: "1px", textTransform: "uppercase", padding: "0.85rem 0", borderBottom: "1px solid rgba(255,255,255,0.05)", fontWeight: item === "Padel" ? "600" : "400" }}>{item}</a>
           ))}
         </div>
       )}
