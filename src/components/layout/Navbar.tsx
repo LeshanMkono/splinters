@@ -25,6 +25,8 @@ export default function Navbar() {
           ))}
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+          <a href="/login" style={{ background: "transparent", color: "rgba(255,255,255,0.6)", padding: "0.5rem 1.1rem", borderRadius: "100px", textDecoration: "none", fontSize: "0.8rem", fontWeight: "500", border: "1px solid rgba(255,255,255,0.15)", whiteSpace: "nowrap" }}>Sign In</a>
+          <a href="/register" style={{ background: "#E8570C", color: "#111", padding: "0.5rem 1.1rem", borderRadius: "100px", textDecoration: "none", fontSize: "0.8rem", fontWeight: "500", whiteSpace: "nowrap" }}>Join Splinters</a>
           <a href="/courts" style={{ background: "#E8570C", color: "#111", padding: "0.5rem 1.1rem", borderRadius: "100px", textDecoration: "none", fontSize: "0.8rem", fontWeight: "500", whiteSpace: "nowrap" }}>Find a Court</a>
           <button onClick={() => setMenuOpen(!menuOpen)} className="hamburger" style={{ background: "none", border: "none", color: "#F5F2EE", fontSize: "1.5rem", cursor: "pointer", padding: "0.25rem" }}>
             {menuOpen ? "✕" : "☰"}
