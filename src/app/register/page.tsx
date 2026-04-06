@@ -1,7 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -11,9 +12,10 @@ const supabase = createClient(
 const AVATARS = ["🏀","🦁","⚡","🔥","👑","🎯","🐆","🏆"];
 const DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
 const TIMES = ["Morning (6am–10am)","Afternoon (12pm–3pm)","Evening (4pm–8pm)","Night (8pm–11pm)"];
-const COURTS = ["Parklands Sports Club","Nairobi International School","Kasarani Indoor Arena","Karen Gated Court","Kibera Community Court","USIU Basketball Court","Langata Down Court"];
+const COURTS = ["Parklands Sports Club","Olive Crescent International School","Kasarani Indoor Arena","Karen Gated Court","Kibera Community Court","Langata Down Court"];
 
 export default function RegisterPage() {
+  const router = useRouter();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -36,7 +38,7 @@ export default function RegisterPage() {
   const submit = async () => {
     setLoading(true); setError("");
     try {
-      const { error: authErr } = await supabase.auth.signUp({
+      const { data: signUpData, error: authErr } = await supabase.auth.signUp({
         email: form.email, password: form.password,
         options: { data: { name: form.name } }
       });
@@ -48,12 +50,18 @@ export default function RegisterPage() {
         bio: form.bio, tier: "free", status: "waitlist",
       });
       if (dbErr) throw dbErr;
+      const { error: loginErr } = await supabase.auth.signInWithPassword({
+        email: form.email, password: form.password
+      });
+      if (loginErr) throw loginErr;
       setSuccess(true);
     } catch (e: any) {
       setError(e.message);
     }
     setLoading(false);
   };
+
+  useEffect(() => { if (success) { setTimeout(() => router.push("/dashboard"), 1500); } }, [success]);
 
   if (success) return (
     <main style={{ background: "#0A0A0A", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "DM Sans, sans-serif" }}>
