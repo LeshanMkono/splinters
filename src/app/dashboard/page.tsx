@@ -157,7 +157,7 @@ export default function DashboardPage() {
     const results: Record<string, any> = {};
     for (const d of DISTRICTS) {
       try {
-        const res = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${d.lat}&lon=${d.lng}&appid=${OW_KEY}&units=metric&cnt=16`);
+        const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${d.lat}&lon=${d.lng}&appid=${OW_KEY}&units=metric`);
         const json = await res.json();
         results[d.name] = json;
       } catch {}
@@ -166,17 +166,7 @@ export default function DashboardPage() {
   };
 
   const getSessionWeather = (district: string, sessionTime: string) => {
-    const forecast = weather[district];
-    if (!forecast?.list) return null;
-    const hour = sessionTime === "4pm" ? 16 : 17;
-    const now = new Date();
-    const target = new Date(now);
-    target.setHours(hour, 0, 0, 0);
-    const targetTs = Math.floor(target.getTime() / 1000);
-    const closest = forecast.list.reduce((prev: any, curr: any) =>
-      Math.abs(curr.dt - targetTs) < Math.abs(prev.dt - targetTs) ? curr : prev
-    );
-    return closest;
+    return weather[district] || null;
   };
 
   const toggleJoin = (key: string) => {
@@ -338,18 +328,10 @@ export default function DashboardPage() {
             <div style={{ fontSize:"0.55rem", letterSpacing:"3px", textTransform:"uppercase", color:"rgba(255,255,255,0.35)", marginBottom:"0.75rem" }}>Court Weather — 1hr Before Session</div>
             <div style={{ display:"flex", gap:"0.6rem", overflowX:"auto", paddingBottom:"0.5rem", scrollbarWidth:"none" }}>
               {DISTRICTS.map(d => {
-                const forecast = weather[d.name];
-                const sessionHour = d.name === "Lavington" ? 17 : 16;
-                const now2 = new Date();
-                const target = new Date(now2);
-                target.setHours(sessionHour, 0, 0, 0);
-                const targetTs = Math.floor(target.getTime() / 1000);
-                const closest = forecast?.list?.reduce((prev: any, curr: any) =>
-                  Math.abs(curr.dt - targetTs) < Math.abs(prev.dt - targetTs) ? curr : prev
-                );
-                const main = closest?.weather?.[0]?.main || "—";
+                const w = weather[d.name];
+                const main = w?.weather?.[0]?.main || "—";
                 const icon = WEATHER_ICONS[main] || "🌡️";
-                const temp = closest?.main?.temp ? Math.round(closest.main.temp) : "—";
+                const temp = w?.main?.temp ? Math.round(w.main.temp) : "—";
                 const rating = PLAY_RATING[main];
                 return (
                   <div key={d.name} style={{ background:"#0D1117", border:"1px solid rgba(255,255,255,0.07)", borderRadius:"12px", padding:"0.875rem 1rem", minWidth:"120px", flexShrink:0 }}>
@@ -381,9 +363,9 @@ export default function DashboardPage() {
                 const isJoined = joined.includes(key);
                 const wData = getSessionWeather(s.district, s.weatherTime);
                 const wMain = wData?.weather?.[0]?.main || "";
-                const wIcon = WEATHER_ICONS[wMain] || "🌡️";
+                const wIcon = wMain ? (WEATHER_ICONS[wMain] || "🌡️") : "🌡️";
                 const wTemp = wData?.main?.temp ? Math.round(wData.main.temp) : "—";
-                const wRating = PLAY_RATING[wMain];
+                const wRating = wMain ? PLAY_RATING[wMain] : null;
                 const canJoin = isElite || (isBaller && s.type === "Outdoor");
                 return (
                   <div key={key} style={{ background:"#0D1117", border:`1px solid ${isJoined ? "rgba(232,87,12,0.4)" : "rgba(255,255,255,0.07)"}`, borderRadius:"14px", padding:"1.25rem", transition:"all 0.3s" }}>
