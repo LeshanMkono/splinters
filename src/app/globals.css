@@ -83,21 +83,7 @@ body { background: #0A0A0A; color: #F5F2EE; font-family: 'DM Sans', sans-serif; 
   100% { transform: translateX(100%); }
 }
 
-/* ── Desktop cursor:none (only when basketball cursor is mounted) ── */
-body.has-basketball-cursor,
-body.has-basketball-cursor a,
-body.has-basketball-cursor button {
-  cursor: none;
-}
-
-/* ── Hide floating ball on desktop, cursor on mobile ── */
-.floating-ball { display: none; }
-@media (max-width: 767px) {
-  .floating-ball { display: flex; }
-  .basketball-cursor { display: none; }
-}
 @media (prefers-reduced-motion: reduce) {
-  .floating-ball { animation: none !important; }
   .reveal-up { animation: none !important; opacity: 1 !important; }
 }
 
