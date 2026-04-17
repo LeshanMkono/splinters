@@ -2,20 +2,129 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 
-const DISTRICTS: Record<string, { name: string; desc: string; courts: string[] }> = {
-  westlands: { name: "Westlands", desc: "Basketball courts in Westlands, Nairobi.", courts: ["Parklands Sports Club", "ABSA Bank Sports Club", "St Austins Academy Basketball Court", "Basketball Court James Gichuru Road"] },
-  kasarani: { name: "Kasarani", desc: "Basketball courts in Kasarani, Nairobi.", courts: ["Kasarani Indoor Basketball Arena", "USIU Basketball Court", "Kenya Academy of Sports Basketball Court"] },
-  karen: { name: "Karen", desc: "Basketball courts in Karen, Nairobi.", courts: ["Karen Gated Basketball Court"] },
-  kibera: { name: "Kibera", desc: "Basketball courts in Kibera, Nairobi.", courts: ["Kibera Community Basketball Court"] },
-  langata: { name: "Langata", desc: "Basketball courts in Langata, Nairobi.", courts: ["Langata Down Basketball Court"] },
-  parklands: { name: "Parklands", desc: "Basketball courts in Parklands, Nairobi.", courts: ["Olive Crescent School Basketball Court"] },
-  lavington: { name: "Lavington", desc: "Basketball courts in Lavington, Nairobi.", courts: ["Nairobi International School Basketball Court", "Basketball Court James Gichuru Road", "Braeburn Schools Basketball Court"] },
-  eastleigh: { name: "Eastleigh", desc: "Basketball courts in Eastleigh, Nairobi.", courts: ["Camp Toyoyo Jericho Basketball Court", "Eastleigh High School Basketball Court"] },
-  cbd: { name: "Nairobi CBD", desc: "Basketball courts in Nairobi CBD.", courts: ["Kenya Science Basketball Court", "University of Nairobi Basketball Court", "Uhuru Park Basketball Court", "Taarifa Road Sports Complex Basketball Court"] },
-  umoja: { name: "Umoja", desc: "Basketball courts in Umoja, Nairobi.", courts: ["Umoja 2 Basketball Court"] },
-  komarock: { name: "Komarock", desc: "Basketball courts in Komarock, Nairobi.", courts: ["Basketball Court Komarock"] },
-  ridgeways: { name: "Ridgeways", desc: "Basketball courts in Ridgeways, Nairobi.", courts: ["Ridgeways Basketball Court"] },
-  ruiru: { name: "Ruiru", desc: "Basketball courts in Ruiru, Nairobi.", courts: ["Ruiru Secondary School Basketball Court"] },
+interface DistrictData {
+  name: string;
+  desc: string;
+  courts: Array<{ name: string; slug: string; type: string; surface: string }>;
+  keywords: string[];
+}
+
+const DISTRICTS: Record<string, DistrictData> = {
+  westlands: {
+    name: "Westlands",
+    desc: "Find 4 verified basketball courts in Westlands, Nairobi — from sports clubs to school courts. All with real GPS, ratings and directions.",
+    courts: [
+      { name: "Parklands Sports Club", slug: "parklands-sports-club", type: "Sports Club", surface: "Concrete" },
+      { name: "ABSA Bank Sports Club", slug: "absa-bank-sports-club", type: "Sports Club", surface: "Concrete" },
+      { name: "St Austins Academy Basketball Court", slug: "st-austins-academy-basketball-court", type: "School Court", surface: "Concrete" },
+      { name: "Basketball Court James Gichuru Road", slug: "basketball-court-james-gichuru", type: "Community Court", surface: "Concrete" },
+    ],
+    keywords: ["basketball courts westlands nairobi", "westlands basketball court hire", "play basketball westlands", "outdoor basketball court westlands"],
+  },
+  kasarani: {
+    name: "Kasarani",
+    desc: "3 verified basketball courts in Kasarani, Nairobi — including the Kasarani Indoor Arena at Moi Sports Centre.",
+    courts: [
+      { name: "Kasarani Indoor Basketball Arena", slug: "kasarani-indoor-basketball-arena", type: "Indoor Arena", surface: "Hardwood" },
+      { name: "USIU Basketball Court", slug: "usiu-basketball-court", type: "University Court", surface: "Hardwood" },
+      { name: "Kenya Academy of Sports Basketball Court", slug: "kenya-academy-of-sports-basketball-court", type: "Academy Court", surface: "Hardwood" },
+    ],
+    keywords: ["basketball courts kasarani nairobi", "kasarani indoor basketball", "usiu basketball court", "moi sports centre basketball"],
+  },
+  karen: {
+    name: "Karen",
+    desc: "Verified basketball courts in Karen, Nairobi. Play in one of Nairobi's most scenic residential areas.",
+    courts: [
+      { name: "Karen Gated Basketball Court", slug: "karen-gated-basketball-court", type: "Private Court", surface: "Concrete" },
+    ],
+    keywords: ["basketball courts karen nairobi", "karen basketball court hire", "play basketball karen nairobi"],
+  },
+  kibera: {
+    name: "Kibera",
+    desc: "Free community basketball courts in Kibera, Nairobi. Open to all — verified by Splinters.",
+    courts: [
+      { name: "Kibera Community Basketball Court", slug: "kibera-community-basketball-court", type: "Community Court", surface: "Concrete" },
+    ],
+    keywords: ["basketball courts kibera nairobi", "kibera basketball community", "free basketball court kibera"],
+  },
+  langata: {
+    name: "Langata",
+    desc: "Basketball courts in Langata, Nairobi — Langata Road and surrounds.",
+    courts: [
+      { name: "Langata Down Basketball Court", slug: "langata-down-basketball-court", type: "Community Court", surface: "Concrete" },
+    ],
+    keywords: ["basketball court langata nairobi", "langata road basketball", "play basketball langata"],
+  },
+  parklands: {
+    name: "Parklands",
+    desc: "Basketball courts in Parklands, Nairobi — a short drive from Westlands and CBD.",
+    courts: [
+      { name: "Olive Crescent School Basketball Court", slug: "olive-crescent-school", type: "School Court", surface: "Concrete" },
+    ],
+    keywords: ["basketball courts parklands nairobi", "parklands basketball court", "play basketball parklands nairobi"],
+  },
+  lavington: {
+    name: "Lavington",
+    desc: "3 basketball courts in Lavington, Nairobi — school courts and community courts near James Gichuru Road.",
+    courts: [
+      { name: "Nairobi International School Basketball Court", slug: "nairobi-international-school", type: "School Court", surface: "Hardwood" },
+      { name: "Basketball Court James Gichuru Road", slug: "basketball-court-james-gichuru", type: "Community Court", surface: "Concrete" },
+      { name: "Braeburn Schools Basketball Court", slug: "braeburn-schools-basketball-court", type: "School Court", surface: "Hardwood" },
+    ],
+    keywords: ["basketball courts lavington nairobi", "lavington basketball court", "james gichuru basketball nairobi"],
+  },
+  eastleigh: {
+    name: "Eastleigh",
+    desc: "2 verified basketball courts in Eastleigh, Nairobi — community and school courts.",
+    courts: [
+      { name: "Camp Toyoyo Jericho Basketball Court", slug: "camp-toyoyo-jericho", type: "Community Court", surface: "Concrete" },
+      { name: "Eastleigh High School Basketball Court", slug: "eastleigh-high-school-basketball-court", type: "School Court", surface: "Concrete" },
+    ],
+    keywords: ["basketball courts eastleigh nairobi", "eastleigh basketball court", "camp toyoyo basketball jericho"],
+  },
+  cbd: {
+    name: "Nairobi CBD",
+    desc: "4 basketball courts in Nairobi CBD — public courts, university courts and sports complexes in the city centre.",
+    courts: [
+      { name: "Kenya Science Basketball Court", slug: "kenya-science-basketball-court", type: "Institution Court", surface: "Concrete" },
+      { name: "University of Nairobi Basketball Court", slug: "university-of-nairobi-basketball-court", type: "University Court", surface: "Hardwood" },
+      { name: "Uhuru Park Basketball Court", slug: "uhuru-park-basketball-court", type: "Public Court", surface: "Concrete" },
+      { name: "Taarifa Road Sports Complex Basketball Court", slug: "taarifa-road-sports-complex", type: "Sports Complex", surface: "Concrete" },
+    ],
+    keywords: ["basketball courts nairobi cbd", "nairobi city centre basketball", "uhuru park basketball", "university of nairobi basketball"],
+  },
+  umoja: {
+    name: "Umoja",
+    desc: "Community basketball courts in Umoja Estate, Nairobi East.",
+    courts: [
+      { name: "Umoja 2 Basketball Court", slug: "umoja-2-basketball-court", type: "Community Court", surface: "Concrete" },
+    ],
+    keywords: ["basketball court umoja nairobi", "umoja 2 basketball", "nairobi east basketball court"],
+  },
+  komarock: {
+    name: "Komarock",
+    desc: "Basketball courts in Komarock, Nairobi — community courts in Nairobi East.",
+    courts: [
+      { name: "Basketball Court Komarock", slug: "basketball-court-komarock", type: "Community Court", surface: "Concrete" },
+    ],
+    keywords: ["basketball court komarock nairobi", "komarock basketball", "nairobi east outdoor basketball"],
+  },
+  ridgeways: {
+    name: "Ridgeways",
+    desc: "Basketball courts in Ridgeways, North Nairobi.",
+    courts: [
+      { name: "Ridgeways Basketball Court", slug: "ridgeways-basketball-court", type: "Community Court", surface: "Concrete" },
+    ],
+    keywords: ["basketball court ridgeways nairobi", "ridgeways outdoor basketball", "north nairobi basketball court"],
+  },
+  ruiru: {
+    name: "Ruiru",
+    desc: "Basketball courts in Ruiru, Kiambu County — just outside Nairobi.",
+    courts: [
+      { name: "Ruiru Secondary School Basketball Court", slug: "ruiru-secondary-basketball-court", type: "School Court", surface: "Concrete" },
+    ],
+    keywords: ["basketball court ruiru nairobi", "ruiru secondary basketball", "kiambu basketball court"],
+  },
 };
 
 type Props = { params: { district: string } };
@@ -80,10 +189,10 @@ export default function DistrictPage({ params }: Props) {
               <div key={i} style={{ background: "#0D1117", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "12px", padding: "1.25rem 1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <div>
                   <div style={{ fontSize: "0.55rem", letterSpacing: "2px", textTransform: "uppercase", color: "#E8570C", marginBottom: "0.25rem" }}>Basketball Court · {d.name}</div>
-                  <div style={{ fontWeight: "600", fontSize: "0.95rem", color: "#F5F2EE" }}>{court}</div>
-                  <div style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.35)", marginTop: "0.25rem" }}>📍 {d.name}, Nairobi</div>
+                  <div style={{ fontWeight: "600", fontSize: "0.95rem", color: "#F5F2EE" }}>{court.name}</div>
+                  <div style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.35)", marginTop: "0.25rem" }}>📍 {d.name}, Nairobi · {court.surface}</div>
                 </div>
-                <Link href="/courts" style={{ background: "#E8570C", color: "#111", padding: "0.5rem 1rem", borderRadius: "100px", textDecoration: "none", fontSize: "0.72rem", fontWeight: "600", flexShrink: 0, marginLeft: "1rem" }}>View →</Link>
+                <Link href={`/courts/${court.slug}`} style={{ background: "#E8570C", color: "#111", padding: "0.5rem 1rem", borderRadius: "100px", textDecoration: "none", fontSize: "0.72rem", fontWeight: "600", flexShrink: 0, marginLeft: "1rem" }}>View →</Link>
               </div>
             ))}
           </div>
