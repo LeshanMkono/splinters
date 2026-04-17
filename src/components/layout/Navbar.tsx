@@ -21,6 +21,13 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [member, setMember] = useState<any>(null);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     const init = async () => {
@@ -56,7 +63,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0.75rem 1.25rem", background: "rgba(10,10,10,0.92)", backdropFilter: "blur(12px)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+      <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0.75rem 1.25rem", background: scrolled ? "rgba(10,10,10,0.92)" : "transparent", backdropFilter: scrolled ? "blur(16px)" : "none", WebkitBackdropFilter: scrolled ? "blur(16px)" : "none", borderBottom: scrolled ? "1px solid rgba(255,255,255,0.06)" : "none", transition: "background 0.3s, backdrop-filter 0.3s, border-color 0.3s" }}>
 
         {/* Logo */}
         <a href="/" style={{ display: "flex", alignItems: "center", gap: "0.5rem", textDecoration: "none", flexShrink: 0 }}>
@@ -84,7 +91,7 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <a href="/login" style={{ color: "rgba(255,255,255,0.5)", textDecoration: "none", fontSize: "0.78rem", padding: "0.35rem 0.875rem", borderRadius: "100px", border: "1px solid rgba(255,255,255,0.12)" }}>Sign In</a>
+              <a href="/login" className="btn-glass" style={{ textDecoration: "none", fontSize: "0.78rem", padding: "0.35rem 0.875rem", borderRadius: "100px" }}>Sign In</a>
               <a href="/register" style={{ background: "#E8570C", color: "#111", padding: "0.35rem 0.875rem", borderRadius: "100px", textDecoration: "none", fontSize: "0.78rem", fontWeight: "700" }}>Join</a>
             </>
           )}
