@@ -102,6 +102,42 @@ zoomControlOptions: {
   return (
     <section id="map" style={{ position: "relative", width: "100%", height: "100vh", overflow: "hidden" }}>
       <div ref={mapRef} style={{ position: "absolute", inset: 0, zIndex: 0 }} />
+
+      {/* SPLINTERS title overlay — visible until map loads, then fades */}
+      <div style={{
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        zIndex: 30,
+        textAlign: "center",
+        pointerEvents: "none",
+        opacity: mapLoaded ? 0 : 1,
+        transition: "opacity 1s ease 0.5s",
+      }}>
+        <div style={{
+          fontFamily: "Bebas Neue, sans-serif",
+          fontSize: "clamp(3rem, 12vw, 9rem)",
+          color: "#F5F2EE",
+          letterSpacing: "12px",
+          lineHeight: 1,
+          textShadow: "0 0 60px rgba(232,87,12,0.4)",
+          animation: "logoReveal 0.8s ease both",
+        }}>
+          SPLIN<span style={{ color: "#E8570C" }}>T</span>ERS
+        </div>
+        <div style={{
+          fontSize: "0.7rem",
+          letterSpacing: "5px",
+          textTransform: "uppercase",
+          color: "rgba(255,255,255,0.35)",
+          marginTop: "0.75rem",
+          animation: "logoReveal 0.8s ease 0.3s both",
+        }}>
+          Nairobi Basketball · Find Your Court
+        </div>
+      </div>
+
       {!mapLoaded && (
         <div style={{ position: "absolute", inset: 0, zIndex: 5, background: "#0A0A0A", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: "1rem" }}>
           <div style={{ fontSize: "3rem" }}>🏀</div>
