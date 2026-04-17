@@ -62,7 +62,7 @@ export default function Courts() {
         flexShrink: 0,
         ...(isMobile ? { flex: "0 0 82%", scrollSnapAlign: "center", opacity: idx === activeIdx ? 1 : 0.45, transform: idx === activeIdx ? "scale(1)" : "scale(0.95)", transition: "all 0.4s ease" } : {}),
       }}
-      onMouseEnter={e => { if (!isMobile) { e.currentTarget.style.borderColor = "rgba(232,87,12,0.4)"; e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 12px 40px rgba(0,0,0,0.4)"; }}}
+      onMouseEnter={e => { if (!isMobile) { e.currentTarget.style.borderColor = "rgba(232,87,12,0.5)"; e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 0 0 1px rgba(232,87,12,0.15), 0 16px 48px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,140,60,0.1)"; }}}
       onMouseLeave={e => { if (!isMobile) { e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)"; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}}>
 
       <div style={{ position: "relative", height: "220px", overflow: "hidden" }}>
