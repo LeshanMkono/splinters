@@ -62,7 +62,7 @@ export default function Experiences() {
               <div style={{ position: "relative", height: "200px", overflow: "hidden" }}>
                 <img src={exp.image} alt={exp.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%)" }} />
-                <div style={{ position: "absolute", top: "0.75rem", left: "0.75rem", background: i === 0 ? "rgba(232,87,12,0.9)" : i === 1 ? "rgba(29,185,84,0.9)" : "rgba(255,215,0,0.9)", color: "#111", fontSize: "0.58rem", padding: "3px 10px", borderRadius: "100px", fontWeight: "600", letterSpacing: "0.5px", textTransform: "uppercase" }}>{exp.tag}</div>
+                <div style={{ position: "absolute", top: "0.75rem", left: "0.75rem", background: "rgba(0,0,0,0.55)", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)", border: "1px solid rgba(232,87,12,0.45)", color: "#F5F2EE", fontSize: "0.58rem", padding: "3px 10px", borderRadius: "100px", fontWeight: "600", letterSpacing: "0.5px", textTransform: "uppercase" }}>{exp.tag}</div>
                 <div style={{ position: "absolute", top: "0.75rem", right: "0.75rem", background: "rgba(0,0,0,0.65)", color: "rgba(255,255,255,0.65)", fontSize: "0.58rem", padding: "3px 10px", borderRadius: "100px" }}>{exp.duration}</div>
               </div>
 
@@ -76,9 +76,7 @@ export default function Experiences() {
                     </div>
                   ))}
                 </div>
-                <a href="#" style={{ display: "inline-block", background: "#E8570C", color: "#111", padding: "0.55rem 1.5rem", borderRadius: "100px", textDecoration: "none", fontSize: "0.8rem", fontWeight: "600", letterSpacing: "0.5px", alignSelf: "flex-start" }}
-                  onMouseEnter={e => (e.currentTarget.style.opacity = "0.85")}
-                  onMouseLeave={e => (e.currentTarget.style.opacity = "1")}>
+                <a href="#" className="btn-glass" style={{ display: "inline-block", padding: "0.55rem 1.5rem", borderRadius: "100px", textDecoration: "none", fontSize: "0.8rem", fontWeight: "600", letterSpacing: "0.5px", alignSelf: "flex-start" }}>
                   Book Now →
                 </a>
               </div>
