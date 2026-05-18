@@ -23,10 +23,7 @@ export default function DunkBanner() {
     let particles: Particle[] = [];
     let raf: number;
 
-    const resize = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    };
+    const resize = () => { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; };
     resize();
     window.addEventListener("resize", resize);
 
@@ -54,7 +51,7 @@ export default function DunkBanner() {
         p.y += p.vy;
         p.vy += 0.04;
         p.life -= 0.012;
-        ctx.globalAlpha = p.life * 0.8;
+        ctx.globalAlpha = p.life * 0.9;
         ctx.fillStyle = "#E8570C";
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
@@ -65,10 +62,7 @@ export default function DunkBanner() {
     };
     raf = requestAnimationFrame(tick);
 
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("resize", resize);
-    };
+    return () => { cancelAnimationFrame(raf); window.removeEventListener("resize", resize); };
   }, []);
 
   const netTs = [0.08, 0.22, 0.36, 0.5, 0.64, 0.78, 0.92];
@@ -78,30 +72,28 @@ export default function DunkBanner() {
       position: "relative",
       minHeight: "100dvh",
       overflow: "hidden",
-      background: "#0A0A0A",
+      background: "linear-gradient(180deg, #FFF5F0 0%, #FFFFFF 100%)",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
     }}>
-      {/* Conic rays */}
       <div aria-hidden="true" style={{
         position: "absolute",
         inset: 0,
         background: [
           "conic-gradient(from 0deg at 50% 38%,",
-          "transparent 0deg, rgba(232,87,12,0.07) 8deg, transparent 16deg,",
-          "rgba(232,87,12,0.05) 28deg, transparent 36deg,",
-          "rgba(232,87,12,0.07) 48deg, transparent 56deg,",
-          "rgba(232,87,12,0.05) 68deg, transparent 76deg,",
-          "rgba(232,87,12,0.07) 88deg, transparent 96deg,",
-          "rgba(232,87,12,0.05) 108deg, transparent 116deg,",
-          "rgba(232,87,12,0.07) 128deg, transparent 136deg,",
-          "rgba(232,87,12,0.05) 148deg, transparent 156deg,",
+          "transparent 0deg, rgba(232,87,12,0.04) 8deg, transparent 16deg,",
+          "rgba(232,87,12,0.03) 28deg, transparent 36deg,",
+          "rgba(232,87,12,0.04) 48deg, transparent 56deg,",
+          "rgba(232,87,12,0.03) 68deg, transparent 76deg,",
+          "rgba(232,87,12,0.04) 88deg, transparent 96deg,",
+          "rgba(232,87,12,0.03) 108deg, transparent 116deg,",
+          "rgba(232,87,12,0.04) 128deg, transparent 136deg,",
+          "rgba(232,87,12,0.03) 148deg, transparent 156deg,",
           "transparent 360deg)",
         ].join(" "),
       }} />
 
-      {/* Radial glow */}
       <div aria-hidden="true" style={{
         position: "absolute",
         top: "15%",
@@ -109,37 +101,22 @@ export default function DunkBanner() {
         transform: "translateX(-50%)",
         width: "600px",
         height: "400px",
-        background: "radial-gradient(ellipse, rgba(232,87,12,0.16) 0%, transparent 65%)",
+        background: "radial-gradient(ellipse, rgba(232,87,12,0.08) 0%, transparent 65%)",
         pointerEvents: "none",
       }} />
 
-      {/* Particle canvas */}
       <canvas
         ref={canvasRef}
         aria-hidden="true"
-        style={{
-          position: "absolute",
-          inset: 0,
-          width: "100%",
-          height: "100%",
-          pointerEvents: "none",
-        }}
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }}
       />
 
-      {/* Basketball rim */}
       <svg
         aria-hidden="true"
-        style={{
-          position: "absolute",
-          top: "20%",
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "clamp(120px, 20vw, 200px)",
-          overflow: "visible",
-        }}
+        style={{ position: "absolute", top: "20%", left: "50%", transform: "translateX(-50%)", width: "clamp(120px, 20vw, 200px)", overflow: "visible" }}
         viewBox="0 0 200 70"
       >
-        <line x1="100" y1="0" x2="100" y2="-24" stroke="#555" strokeWidth="5" strokeLinecap="round" />
+        <line x1="100" y1="0" x2="100" y2="-24" stroke="#999" strokeWidth="5" strokeLinecap="round" />
         <ellipse cx="100" cy="30" rx="88" ry="12" fill="none" stroke="#E8570C" strokeWidth="5" />
         {netTs.map((t, i) => (
           <line
@@ -148,64 +125,42 @@ export default function DunkBanner() {
             y1={30 + 12 * Math.abs(Math.sin(Math.PI * t))}
             x2={12 + t * 176 + 10}
             y2={68}
-            stroke="rgba(255,255,255,0.15)"
+            stroke="rgba(0,0,0,0.15)"
             strokeWidth="1.5"
           />
         ))}
       </svg>
 
-      {/* Main text */}
       <div style={{ position: "relative", zIndex: 10, textAlign: "center", padding: "0 1.5rem" }}>
-        <div style={{
-          fontSize: "0.65rem",
-          letterSpacing: "5px",
-          textTransform: "uppercase",
-          color: "rgba(255,255,255,0.35)",
-          marginBottom: "1rem",
-        }}>
+        <div style={{ fontSize: "0.65rem", letterSpacing: "5px", textTransform: "uppercase", color: "#999", marginBottom: "1rem" }}>
           Nairobi Basketball
         </div>
-        <h2 style={{
-          fontFamily: "Bebas Neue, sans-serif",
-          fontSize: "clamp(4.5rem, 18vw, 14rem)",
-          color: "#F5F2EE",
-          lineHeight: 0.82,
-          letterSpacing: "6px",
-          margin: 0,
-        }}>
+        <h2 style={{ fontFamily: "Bebas Neue, sans-serif", fontSize: "clamp(4.5rem, 18vw, 14rem)", color: "#111", lineHeight: 0.82, letterSpacing: "6px", margin: 0 }}>
           PLAY
         </h2>
-        <h2 style={{
-          fontFamily: "Bebas Neue, sans-serif",
-          fontSize: "clamp(4.5rem, 18vw, 14rem)",
-          color: "#E8570C",
-          lineHeight: 0.82,
-          letterSpacing: "6px",
-          marginBottom: "1.5rem",
-        }}>
+        <h2 style={{ fontFamily: "Bebas Neue, sans-serif", fontSize: "clamp(4.5rem, 18vw, 14rem)", color: "#E8570C", lineHeight: 0.82, letterSpacing: "6px", marginBottom: "1.5rem" }}>
           NAIROBI
         </h2>
-        <p style={{
-          fontSize: "0.78rem",
-          letterSpacing: "4px",
-          textTransform: "uppercase",
-          color: "rgba(255,255,255,0.3)",
-          marginBottom: "2.5rem",
-        }}>
-          63+ Courts · 8 Districts · 1 Community
+        <p style={{ fontSize: "0.78rem", letterSpacing: "4px", textTransform: "uppercase", color: "#999", marginBottom: "2.5rem" }}>
+          31 Courts · 13 Districts · 1 Community
         </p>
-        <a
+        
           href="#courts"
-          className="btn-glass"
           style={{
             display: "inline-block",
             padding: "0.9rem 2.75rem",
             borderRadius: "100px",
             textDecoration: "none",
             fontSize: "0.85rem",
-            fontWeight: "500",
+            fontWeight: "700",
             letterSpacing: "1px",
+            background: "#E8570C",
+            color: "#fff",
+            boxShadow: "0 4px 16px rgba(232,87,12,0.2)",
+            transition: "opacity 0.2s",
           }}
+          onMouseEnter={e => (e.currentTarget.style.opacity = "0.9")}
+          onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
         >
           Find Your Court →
         </a>
