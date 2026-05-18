@@ -5,6 +5,7 @@ export default function Experiences() {
     {
       title: "THE STREET RUN",
       tag: "Most Popular",
+      tagColor: "#E8570C",
       duration: "2–3 hrs",
       desc: "Step into a real Nairobi pick-up game. A local guide gets you into the right run on one of the city's most iconic neighbourhood courts. Raw, unfiltered, authentic.",
       includes: ["Local guide", "Court access", "Post-game local meal"],
@@ -13,6 +14,7 @@ export default function Experiences() {
     {
       title: "THE STREET BALL EXPERIENCE",
       tag: "Full Day",
+      tagColor: "#2563EB",
       duration: "Full Day",
       desc: "The complete Nairobi street ball immersion. Morning skills session with local players, afternoon tournament across two courts, evening social with the community.",
       includes: ["Morning skills session", "2-court tournament", "Evening social"],
@@ -21,6 +23,7 @@ export default function Experiences() {
     {
       title: "THE NAROK WEEKEND",
       tag: "Signature",
+      tagColor: "#7C3AED",
       duration: "2 Nights · 3 Days",
       desc: "Travel beyond the city. Experience Maasai culture, play basketball with the local community, and spend two nights in a curated lodge in Narok. This is where basketball meets Kenya.",
       includes: ["Return transport", "2 nights accommodation", "Cultural experience", "2 community games"],
@@ -29,54 +32,60 @@ export default function Experiences() {
   ];
 
   return (
-    <section id="experiences" style={{ position: "relative", padding: "5rem 0", minHeight: "60vh", overflow: "hidden" }}>
-      <div style={{ position: "absolute", inset: 0, zIndex: 0, backgroundImage: "url('/bg-experiences.jpg')", backgroundAttachment: "fixed", backgroundSize: "cover", backgroundPosition: "center", filter: "brightness(0.2) saturate(2)" }} />
-      <div style={{ position: "absolute", inset: 0, zIndex: 1, background: "linear-gradient(180deg, rgba(10,10,10,0.9) 0%, rgba(45,14,0,0.85) 40%, rgba(232,87,12,0.7) 100%)" }} />
-
-      {/* Ghost text */}
-      <div style={{ position: "absolute", fontFamily: "sans-serif", fontWeight: "bold", fontSize: "clamp(8rem,20vw,16rem)", color: "rgba(232,87,12,0.04)", bottom: "-2rem", right: "-1rem", letterSpacing: "10px", pointerEvents: "none", userSelect: "none", zIndex: 1, lineHeight: 1 }}>PLAY</div>
-
-      <div style={{ position: "relative", zIndex: 2, maxWidth: "1100px", margin: "0 auto", padding: "0 1.5rem" }}>
+    <section id="experiences" style={{ background: "#ffffff", padding: "80px 0", borderTop: "1px solid #E8E8E8" }}>
+      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 1.5rem" }}>
 
         {/* Header */}
         <div style={{ marginBottom: "3rem" }}>
-          <div style={{ fontSize: "0.62rem", letterSpacing: "4px", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "0.75rem" }}>
+          <p style={{ fontSize: "0.65rem", letterSpacing: "4px", textTransform: "uppercase", color: "#999", marginBottom: "0.75rem", margin: "0 0 12px" }}>
             #03 · Tourist Experiences · Nairobi
-          </div>
-          <div style={{ fontWeight: "bold", fontSize: "clamp(3rem,8vw,5.5rem)", color: "#F5F2EE", lineHeight: 0.88, marginBottom: "1rem" }}>
-            EXPERIENCE<br/>NAIROBI<br/><span style={{ color: "#E8570C" }}>BASKETBALL</span>
-          </div>
-          <div style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.4)", lineHeight: 1.7, maxWidth: "480px", fontWeight: 300 }}>
+          </p>
+          <h2 style={{ fontFamily: "Bebas Neue, sans-serif", fontSize: "clamp(3rem, 8vw, 5.5rem)", color: "#111", lineHeight: 0.9, margin: "0 0 1rem", letterSpacing: "2px" }}>
+            EXPERIENCE<br />NAIROBI<br /><span style={{ color: "#E8570C" }}>BASKETBALL</span>
+          </h2>
+          <p style={{ fontSize: "0.95rem", color: "#666", lineHeight: 1.7, maxWidth: "480px", margin: 0 }}>
             Three curated experiences for players and visitors. From street runs to a weekend in Narok — every experience is designed to connect you with the real Nairobi.
-          </div>
+          </p>
         </div>
 
-        {/* Cards grid */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px,1fr))", gap: "1.5rem" }}>
-          {experiences.map((exp, i) => (
+        {/* Cards */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1.5rem" }}>
+          {experiences.map((exp) => (
             <div key={exp.title}
-              style={{ background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "16px", overflow: "hidden", backdropFilter: "blur(8px)", display: "flex", flexDirection: "column", transition: "transform 0.2s, border-color 0.2s" }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(232,87,12,0.5)"; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.1)"; }}>
+              style={{ background: "#fff", border: "1px solid #E8E8E8", borderRadius: "16px", overflow: "hidden", display: "flex", flexDirection: "column", boxShadow: "0 2px 8px rgba(0,0,0,0.06)", transition: "box-shadow 0.2s, transform 0.2s" }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow = "0 12px 40px rgba(232,87,12,0.12)"; (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = "0 2px 8px rgba(0,0,0,0.06)"; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}>
 
-              <div style={{ position: "relative", height: "200px", overflow: "hidden" }}>
+              {/* Image */}
+              <div style={{ position: "relative", height: "210px", overflow: "hidden" }}>
                 <img src={exp.image} alt={exp.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%)" }} />
-                <div style={{ position: "absolute", top: "0.75rem", left: "0.75rem", background: "rgba(0,0,0,0.55)", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)", border: "1px solid rgba(232,87,12,0.45)", color: "#F5F2EE", fontSize: "0.58rem", padding: "3px 10px", borderRadius: "100px", fontWeight: "600", letterSpacing: "0.5px", textTransform: "uppercase" }}>{exp.tag}</div>
-                <div style={{ position: "absolute", top: "0.75rem", right: "0.75rem", background: "rgba(0,0,0,0.65)", color: "rgba(255,255,255,0.65)", fontSize: "0.58rem", padding: "3px 10px", borderRadius: "100px" }}>{exp.duration}</div>
+                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 55%)" }} />
+                <span style={{ position: "absolute", top: "12px", left: "12px", background: exp.tagColor, color: "#fff", fontSize: "0.58rem", padding: "4px 12px", borderRadius: "100px", fontWeight: "700", letterSpacing: "0.5px", textTransform: "uppercase" }}>
+                  {exp.tag}
+                </span>
+                <span style={{ position: "absolute", top: "12px", right: "12px", background: "rgba(0,0,0,0.6)", color: "#fff", fontSize: "0.58rem", padding: "4px 10px", borderRadius: "100px" }}>
+                  {exp.duration}
+                </span>
               </div>
 
-              <div style={{ padding: "1.25rem", flex: 1, display: "flex", flexDirection: "column" }}>
-                <div style={{ fontWeight: "bold", fontSize: "1rem", color: "#F5F2EE", marginBottom: "0.6rem", lineHeight: 1.2, letterSpacing: "0.5px" }}>{exp.title}</div>
-                <div style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.48)", lineHeight: 1.75, marginBottom: "1rem", flex: 1, fontWeight: 300 }}>{exp.desc}</div>
-                <div style={{ marginBottom: "1.25rem" }}>
+              {/* Body */}
+              <div style={{ padding: "1.5rem", flex: 1, display: "flex", flexDirection: "column" }}>
+                <h3 style={{ fontFamily: "Bebas Neue, sans-serif", fontSize: "1.15rem", color: "#111", marginBottom: "0.6rem", letterSpacing: "1px" }}>
+                  {exp.title}
+                </h3>
+                <p style={{ fontSize: "0.82rem", color: "#666", lineHeight: 1.7, marginBottom: "1rem", flex: 1 }}>
+                  {exp.desc}
+                </p>
+                <div style={{ marginBottom: "1.25rem", borderTop: "1px solid #F0F0F0", paddingTop: "1rem" }}>
                   {exp.includes.map(item => (
-                    <div key={item} style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.42)", marginBottom: "4px", display: "flex", alignItems: "center", gap: "6px" }}>
-                      <span style={{ color: "#E8570C", fontWeight: "bold" }}>✓</span> {item}
+                    <div key={item} style={{ fontSize: "0.72rem", color: "#555", marginBottom: "5px", display: "flex", alignItems: "center", gap: "8px" }}>
+                      <span style={{ color: "#E8570C", fontWeight: "bold", fontSize: "0.8rem" }}>✓</span> {item}
                     </div>
                   ))}
                 </div>
-                <a href="#" className="btn-glass" style={{ display: "inline-block", padding: "0.55rem 1.5rem", borderRadius: "100px", textDecoration: "none", fontSize: "0.8rem", fontWeight: "600", letterSpacing: "0.5px", alignSelf: "flex-start" }}>
+                <a href="#" style={{ display: "inline-block", padding: "0.6rem 1.5rem", borderRadius: "100px", textDecoration: "none", fontSize: "0.82rem", fontWeight: "700", alignSelf: "flex-start", background: "#E8570C", color: "#fff", transition: "opacity 0.2s" }}
+                  onMouseEnter={e => (e.currentTarget.style.opacity = "0.85")}
+                  onMouseLeave={e => (e.currentTarget.style.opacity = "1")}>
                   Book Now →
                 </a>
               </div>

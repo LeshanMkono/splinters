@@ -11,30 +11,15 @@ import Footer from "@/components/layout/Footer";
 
 export default function Home() {
   return (
-    <main>
+    <main style={{ background: "#ffffff" }}>
       <IntroAnimation />
       <Navbar />
       <MapHero />
       <DunkBanner />
-      <div style={{ position: "relative" }}>
-        <div style={{
-          position: "absolute",
-          inset: 0,
-          zIndex: 0,
-          backgroundImage: "url('/bg-edwards.webp')",
-          backgroundSize: "cover",
-          backgroundPosition: "center top",
-          backgroundAttachment: "fixed",
-          filter: "brightness(0.08) saturate(1.5)",
-          pointerEvents: "none",
-        }} />
-        <div style={{ position: "relative", zIndex: 2 }}>
-          <Courts />
-          <Gallery />
-          <Leaderboard />
-          <Experiences />
-        </div>
-      </div>
+      <Courts />
+      <Gallery />
+      <Leaderboard />
+      <Experiences />
       <About />
       <Footer />
     </main>
