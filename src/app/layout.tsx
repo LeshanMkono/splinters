@@ -67,7 +67,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           `}
         </Script>
       </head>
-      <body>{children}</body>
+      <body style={{ margin: 0, padding: 0, background: "#ffffff", color: "#111111", fontFamily: "DM Sans, sans-serif" }}>{children}</body>
     </html>
   );
 }
