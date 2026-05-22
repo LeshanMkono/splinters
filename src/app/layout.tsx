@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-
 import Script from "next/script";
 
 export const metadata: Metadata = {
@@ -66,8 +65,40 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             gtag('config', 'G-FWW054P0X0');
           `}
         </Script>
+        <Script id="structured-data" type="application/ld+json" strategy="beforeInteractive">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "SportsActivityLocation",
+              "name": "Splinters Basketball",
+              "description": "Find and book basketball courts in Nairobi. 31+ verified courts across Westlands, Kasarani, Karen, Kibera, Langata and more.",
+              "url": "https://splinters.co.ke",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Nairobi",
+                "addressCountry": "KE"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": "-1.2833",
+                "longitude": "36.8167"
+              },
+              "sameAs": [
+                "https://www.instagram.com/splinters_basketball_",
+                "https://www.tiktok.com/@splintersbasketball_ke"
+              ],
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.5",
+                "reviewCount": "127"
+              }
+            }
+          `}
+        </Script>
       </head>
-      <body style={{ margin: 0, padding: 0, background: "#ffffff", color: "#111111", fontFamily: "DM Sans, sans-serif" }}>{children}</body>
+      <body style={{ margin: 0, padding: 0, background: "#ffffff", color: "#111111", fontFamily: "DM Sans, sans-serif" }}>
+        {children}
+      </body>
     </html>
   );
 }
