@@ -14,8 +14,10 @@ export default function IntroAnimation() {
   return (
     <div style={{
       position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
-      background: "#0A0A0A", zIndex: 9999,
-      display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column",
+      background: "#FFFFFF",
+      zIndex: 9999,
+      display: "flex", alignItems: "center", justifyContent: "center",
+      flexDirection: "column",
       animation: "introFade 0.5s ease 2.8s both",
     }}>
       <style>{`
@@ -36,12 +38,24 @@ export default function IntroAnimation() {
       <div style={{ position: "absolute", width: "8px", height: "8px", background: "#E8570C", borderRadius: "50%", opacity: 0, animation: "shatter3 0.4s ease 1.1s both" }} />
       <div style={{ position: "absolute", width: "8px", height: "8px", background: "#E8570C", borderRadius: "50%", opacity: 0, animation: "shatter4 0.4s ease 1.15s both" }} />
 
-      <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at center, rgba(232,87,12,0.15) 0%, transparent 70%)", opacity: 0, animation: "mapReveal 0.8s ease 1.4s both" }} />
+      <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at center, rgba(232,87,12,0.08) 0%, transparent 70%)", opacity: 0, animation: "mapReveal 0.8s ease 1.4s both" }} />
 
-      <div style={{ fontFamily: "sans-serif", fontSize: "clamp(4rem,12vw,9rem)", fontWeight: "bold", color: "#F5F2EE", letterSpacing: "8px", position: "relative", animation: "logoReveal 0.6s ease 0.2s both" }}>
+      <div style={{
+        fontFamily: "Bebas Neue, sans-serif",
+        fontSize: "clamp(4rem,12vw,9rem)",
+        color: "#111111",
+        letterSpacing: "8px",
+        position: "relative",
+        animation: "logoReveal 0.6s ease 0.2s both"
+      }}>
         SPLIN<span style={{ color: "#E8570C" }}>T</span>ERS
       </div>
-      <div style={{ fontSize: "0.75rem", letterSpacing: "4px", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginTop: "1rem", animation: "logoReveal 0.6s ease 0.5s both" }}>
+
+      <div style={{
+        fontSize: "0.75rem", letterSpacing: "4px", textTransform: "uppercase",
+        color: "#999999", marginTop: "1rem",
+        animation: "logoReveal 0.6s ease 0.5s both"
+      }}>
         Nairobi Basketball · Find Your Court
       </div>
     </div>
