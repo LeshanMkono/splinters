@@ -46,8 +46,8 @@ export default function MapHero() {
       disableDefaultUI: true, zoomControl: true,
       zoomControlOptions: { position: window.google.maps.ControlPosition.RIGHT_CENTER },
       styles: [
-        { elementType: "geometry", stylers: [{ color: "#0a0a0a" }] },
-        { elementType: "labels.text.stroke", stylers: [{ color: "#0a0a0a" }] },
+        { elementType: "geometry", stylers: [{ color: "#f5f5f5" }] },
+        { elementType: "labels.text.stroke", stylers: [{ color: "#ffffff" }] },
         { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
         { featureType: "road", elementType: "geometry", stylers: [{ color: "#1a1a1a" }] },
         { featureType: "road.highway", elementType: "geometry", stylers: [{ color: "#2c1a00" }] },
