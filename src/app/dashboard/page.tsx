@@ -81,19 +81,19 @@ function CalendarView({ playDays }: { playDays: string[] }) {
   const daysLeft = new Date(year, month + 1, 0).getDate() - today.getDate();
 
   return (
-    <div style={{ background:"#0D1117", border:"1px solid rgba(255,255,255,0.07)", borderRadius:"14px", padding:"1.25rem" }}>
+    <div style={{ background:"#F8F8F8", border:"1px solid rgba(0,0,0,0.08)", borderRadius:"14px", padding:"1.25rem" }}>
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:"1rem" }}>
         <button onClick={() => { let m=month-1, y=year; if(m<0){m=11;y--;} setMonth(m); setYear(y); }}
-          style={{ background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.08)", color:"rgba(255,255,255,0.6)", width:"32px", height:"32px", borderRadius:"50%", cursor:"pointer", fontSize:"0.9rem" }}>←</button>
+          style={{ background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.08)", color:"rgba(0,0,0,0.6)", width:"32px", height:"32px", borderRadius:"50%", cursor:"pointer", fontSize:"0.9rem" }}>←</button>
         <div>
-          <div style={{ fontFamily:"Bebas Neue, sans-serif", fontSize:"1.3rem", color:"#F5F2EE", textAlign:"center", letterSpacing:"1px" }}>{months[month]} {year}</div>
-          {isCurrent && <div style={{ fontSize:"0.6rem", color:"rgba(255,255,255,0.3)", textAlign:"center" }}>{daysLeft} days remaining</div>}
+          <div style={{ fontFamily:"Bebas Neue, sans-serif", fontSize:"1.3rem", color:"#1A1A1A", textAlign:"center", letterSpacing:"1px" }}>{months[month]} {year}</div>
+          {isCurrent && <div style={{ fontSize:"0.6rem", color:"rgba(0,0,0,0.3)", textAlign:"center" }}>{daysLeft} days remaining</div>}
         </div>
         <button onClick={() => { let m=month+1, y=year; if(m>11){m=0;y++;} setMonth(m); setYear(y); }}
-          style={{ background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.08)", color:"rgba(255,255,255,0.6)", width:"32px", height:"32px", borderRadius:"50%", cursor:"pointer", fontSize:"0.9rem" }}>→</button>
+          style={{ background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.08)", color:"rgba(0,0,0,0.6)", width:"32px", height:"32px", borderRadius:"50%", cursor:"pointer", fontSize:"0.9rem" }}>→</button>
       </div>
       <div style={{ display:"grid", gridTemplateColumns:"repeat(7, 1fr)", gap:"2px", marginBottom:"4px" }}>
-        {days.map(d => <div key={d} style={{ textAlign:"center", fontSize:"0.6rem", color:"rgba(255,255,255,0.3)", padding:"2px 0", fontWeight:"600", letterSpacing:"1px" }}>{d}</div>)}
+        {days.map(d => <div key={d} style={{ textAlign:"center", fontSize:"0.6rem", color:"rgba(0,0,0,0.3)", padding:"2px 0", fontWeight:"600", letterSpacing:"1px" }}>{d}</div>)}
       </div>
       <div style={{ display:"grid", gridTemplateColumns:"repeat(7, 1fr)", gap:"2px" }}>
         {Array(firstDay).fill(null).map((_,i) => <div key={`e${i}`} />)}
@@ -118,10 +118,10 @@ function CalendarView({ playDays }: { playDays: string[] }) {
         })}
       </div>
       <div style={{ marginTop:"0.75rem", display:"flex", gap:"1rem", justifyContent:"center" }}>
-        <div style={{ display:"flex", alignItems:"center", gap:"4px", fontSize:"0.6rem", color:"rgba(255,255,255,0.3)" }}>
+        <div style={{ display:"flex", alignItems:"center", gap:"4px", fontSize:"0.6rem", color:"rgba(0,0,0,0.3)" }}>
           <div style={{ width:"8px", height:"8px", borderRadius:"2px", background:"rgba(232,87,12,0.12)", border:"0.5px solid rgba(232,87,12,0.3)" }} /> Session day
         </div>
-        <div style={{ display:"flex", alignItems:"center", gap:"4px", fontSize:"0.6rem", color:"rgba(255,255,255,0.3)" }}>
+        <div style={{ display:"flex", alignItems:"center", gap:"4px", fontSize:"0.6rem", color:"rgba(0,0,0,0.3)" }}>
           <div style={{ width:"8px", height:"8px", borderRadius:"2px", background:"#E8570C" }} /> Today
         </div>
       </div>
@@ -186,29 +186,27 @@ export default function DashboardPage() {
   });
 
   if (loading) return (
-    <main style={{ background:"#0A0A0A", minHeight:"100vh", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:"DM Sans, sans-serif" }}>
+    <main style={{ background:"#FFFFFF", minHeight:"100vh", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:"DM Sans, sans-serif" }}>
       <div style={{ textAlign:"center" }}>
         <div style={{ fontSize:"3rem", marginBottom:"1rem" }}>🏀</div>
-        <div style={{ color:"rgba(255,255,255,0.4)", fontSize:"0.85rem" }}>Loading your dashboard...</div>
+        <div style={{ color:"rgba(0,0,0,0.4)", fontSize:"0.85rem" }}>Loading your dashboard...</div>
       </div>
     </main>
   );
 
   return (
-    <main style={{ background:"#0A0A0A", minHeight:"100vh", fontFamily:"DM Sans, sans-serif", color:"#F5F2EE", position:"relative" }}>
+    <main style={{ background:"#FFFFFF", minHeight:"100vh", fontFamily:"DM Sans, sans-serif", color:"#1A1A1A", position:"relative" }}>
 
-      {/* KD Background */}
-      <div style={{ position:"fixed", inset:0, backgroundImage:"url(/dashboard-bg.jpg)", backgroundSize:"cover", backgroundPosition:"center top", opacity:0.07, zIndex:0, pointerEvents:"none" }} />
-      <div style={{ position:"relative", zIndex:1 }}>
+<div>
 
         {/* Navbar */}
-        <div style={{ padding:"1rem 1.5rem", display:"flex", justifyContent:"space-between", alignItems:"center", borderBottom:"1px solid rgba(255,255,255,0.06)", position:"sticky", top:0, background:"rgba(10,10,10,0.96)", backdropFilter:"blur(10px)", zIndex:100 }}>
+        <div style={{ padding:"1rem 1.5rem", display:"flex", justifyContent:"space-between", alignItems:"center", borderBottom:"1px solid rgba(0,0,0,0.08)", position:"sticky", top:0, background:"rgba(255,255,255,0.98)", backdropFilter:"blur(10px)", borderBottom:"1px solid rgba(0,0,0,0.08)", zIndex:100 }}>
           <Link href="/" style={{ fontFamily:"Bebas Neue, sans-serif", fontSize:"1.5rem", color:"#E8570C", textDecoration:"none", letterSpacing:"3px" }}>SPLINTERS</Link>
           <div style={{ display:"flex", alignItems:"center", gap:"0.75rem" }}>
             <div style={{ fontSize:"1.5rem" }}>{member?.avatar || "🏀"}</div>
             {isElite && <span style={{ fontSize:"0.7rem", color:"#CA8A04", fontWeight:"700" }}>★</span>}
             <button onClick={async () => { await supabase.auth.signOut(); router.push("/"); }}
-              style={{ background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.1)", color:"rgba(255,255,255,0.4)", padding:"0.4rem 0.9rem", borderRadius:"100px", fontSize:"0.72rem", cursor:"pointer" }}>
+              style={{ background:"rgba(255,255,255,0.05)", border:"1px solid rgba(0,0,0,0.1)", color:"rgba(0,0,0,0.4)", padding:"0.4rem 0.9rem", borderRadius:"100px", fontSize:"0.72rem", cursor:"pointer" }}>
               Sign out
             </button>
           </div>
@@ -222,30 +220,30 @@ export default function DashboardPage() {
             <div style={{ fontFamily:"Bebas Neue, sans-serif", fontSize:"clamp(2rem, 6vw, 3.5rem)", lineHeight:0.88, marginBottom:"0.5rem" }}>
               WELCOME BACK<br /><span style={{ color:"#E8570C" }}>{member?.name?.toUpperCase() || "BALLER"}</span>
             </div>
-            <div style={{ fontSize:"0.75rem", color:"rgba(255,255,255,0.3)" }}>
+            <div style={{ fontSize:"0.75rem", color:"rgba(0,0,0,0.3)" }}>
               {isElite ? "★ Elite Member" : isBaller ? "Community Member · Baller" : "Explorer · Free"} · Member since {new Date(member?.created_at).toLocaleDateString("en-KE", { month:"long", year:"numeric" })}
             </div>
           </div>
 
           {/* Member card */}
-          <div style={{ background:"linear-gradient(135deg, #1a0600, #0D1117)", border:"1px solid rgba(232,87,12,0.2)", borderRadius:"16px", padding:"1.25rem 1.5rem", marginBottom:"1.5rem", display:"flex", alignItems:"center", gap:"1rem" }}>
+          <div style={{ background:"linear-gradient(135deg, #FFF3EE, #F8F8F8)", border:"1px solid rgba(232,87,12,0.2)", borderRadius:"16px", padding:"1.25rem 1.5rem", marginBottom:"1.5rem", display:"flex", alignItems:"center", gap:"1rem" }}>
             <div style={{ fontSize:"3rem", flexShrink:0 }}>{member?.avatar || "🏀"}</div>
             <div style={{ flex:1 }}>
               <div style={{ fontWeight:"700", fontSize:"1.05rem", display:"flex", alignItems:"center", gap:"0.5rem" }}>
                 {member?.name}
                 {isElite && <span style={{ fontSize:"0.75rem", color:"#CA8A04", background:"rgba(202,138,4,0.1)", padding:"1px 6px", borderRadius:"4px", border:"0.5px solid rgba(202,138,4,0.3)" }}>★ Elite</span>}
               </div>
-              <div style={{ fontSize:"0.7rem", color:"rgba(255,255,255,0.35)", marginBottom:"0.5rem" }}>{member?.email}</div>
+              <div style={{ fontSize:"0.7rem", color:"rgba(0,0,0,0.35)", marginBottom:"0.5rem" }}>{member?.email}</div>
               <div style={{ display:"flex", flexWrap:"wrap", gap:"0.3rem" }}>
                 {member?.play_days?.map((d: string) => (
                   <span key={d} style={{ fontSize:"0.55rem", padding:"2px 7px", borderRadius:"100px", background:"rgba(232,87,12,0.12)", border:"0.5px solid rgba(232,87,12,0.3)", color:"#E8570C", textTransform:"capitalize" }}>{d}</span>
                 ))}
-                {member?.play_time && <span style={{ fontSize:"0.55rem", padding:"2px 7px", borderRadius:"100px", background:"rgba(255,255,255,0.05)", border:"0.5px solid rgba(255,255,255,0.1)", color:"rgba(255,255,255,0.4)", textTransform:"capitalize" }}>🕐 {member.play_time}</span>}
+                {member?.play_time && <span style={{ fontSize:"0.55rem", padding:"2px 7px", borderRadius:"100px", background:"rgba(255,255,255,0.05)", border:"0.5px solid rgba(255,255,255,0.1)", color:"rgba(0,0,0,0.4)", textTransform:"capitalize" }}>🕐 {member.play_time}</span>}
               </div>
             </div>
             <div style={{ textAlign:"right", flexShrink:0 }}>
               <div style={{ fontFamily:"Bebas Neue, sans-serif", fontSize:"2rem", color:"#E8570C", lineHeight:1 }}>#{String(member?.id?.slice(-3) || "001").toUpperCase()}</div>
-              <div style={{ fontSize:"0.5rem", color:"rgba(255,255,255,0.25)", letterSpacing:"1px" }}>MEMBER</div>
+              <div style={{ fontSize:"0.5rem", color:"rgba(0,0,0,0.25)", letterSpacing:"1px" }}>MEMBER</div>
             </div>
           </div>
 
@@ -257,9 +255,9 @@ export default function DashboardPage() {
                 ...(isElite ? [{ num:`${indoorUsed}/2`, label:"Indoor sessions used" }] : []),
                 { num:`${daysLeft}`, label:"Days left this month" },
               ].map((s, i) => (
-                <div key={i} style={{ background:"#0D1117", border:"1px solid rgba(255,255,255,0.07)", borderRadius:"12px", padding:"0.875rem", textAlign:"center" }}>
+                <div key={i} style={{ background:"#F8F8F8", border:"1px solid rgba(0,0,0,0.08)", borderRadius:"12px", padding:"0.875rem", textAlign:"center" }}>
                   <div style={{ fontFamily:"Bebas Neue, sans-serif", fontSize:"1.8rem", color:"#E8570C", lineHeight:1 }}>{s.num}</div>
-                  <div style={{ fontSize:"0.6rem", color:"rgba(255,255,255,0.3)", marginTop:"0.25rem", letterSpacing:"0.5px" }}>{s.label}</div>
+                  <div style={{ fontSize:"0.6rem", color:"rgba(0,0,0,0.3)", marginTop:"0.25rem", letterSpacing:"0.5px" }}>{s.label}</div>
                 </div>
               ))}
             </div>
@@ -294,38 +292,38 @@ export default function DashboardPage() {
 
           {/* Courts */}
           <div style={{ marginBottom:"2rem" }}>
-            <div style={{ fontSize:"0.55rem", letterSpacing:"3px", textTransform:"uppercase", color:"rgba(255,255,255,0.35)", marginBottom:"0.75rem" }}>Courts</div>
-            <div style={{ background:"#0D1117", border:"1px solid rgba(255,255,255,0.07)", borderRadius:"14px", overflow:"hidden" }}>
-              <div style={{ padding:"0.6rem 1rem", fontSize:"0.55rem", letterSpacing:"2px", textTransform:"uppercase", color:"rgba(255,255,255,0.3)", borderBottom:"1px solid rgba(255,255,255,0.05)" }}>★ Exclusive Courts</div>
+            <div style={{ fontSize:"0.55rem", letterSpacing:"3px", textTransform:"uppercase", color:"rgba(0,0,0,0.35)", marginBottom:"0.75rem" }}>Courts</div>
+            <div style={{ background:"#F8F8F8", border:"1px solid rgba(0,0,0,0.08)", borderRadius:"14px", overflow:"hidden" }}>
+              <div style={{ padding:"0.6rem 1rem", fontSize:"0.55rem", letterSpacing:"2px", textTransform:"uppercase", color:"rgba(0,0,0,0.3)", borderBottom:"1px solid rgba(0,0,0,0.06)" }}>★ Exclusive Courts</div>
               {EXCLUSIVE_COURTS.map((c, i) => (
-                <div key={i} style={{ display:"flex", alignItems:"center", gap:"0.75rem", padding:"0.875rem 1rem", borderBottom:"1px solid rgba(255,255,255,0.05)" }}>
+                <div key={i} style={{ display:"flex", alignItems:"center", gap:"0.75rem", padding:"0.875rem 1rem", borderBottom:"1px solid rgba(0,0,0,0.06)" }}>
                   <span style={{ fontSize:"0.55rem", padding:"2px 7px", borderRadius:"100px", background:"rgba(202,138,4,0.12)", border:"0.5px solid rgba(202,138,4,0.3)", color:"#CA8A04", whiteSpace:"nowrap" }}>★ Elite</span>
                   <span style={{ flex:1, fontSize:"0.85rem", fontWeight:"600" }}>{c.name}</span>
-                  <span style={{ fontSize:"0.6rem", color:"rgba(255,255,255,0.3)" }}>{c.type}</span>
+                  <span style={{ fontSize:"0.6rem", color:"rgba(0,0,0,0.3)" }}>{c.type}</span>
                   <span style={{ fontSize:"1rem" }}>{isElite ? "✓" : "🔒"}</span>
                 </div>
               ))}
-              <div style={{ padding:"0.6rem 1rem", fontSize:"0.55rem", letterSpacing:"2px", textTransform:"uppercase", color:"rgba(255,255,255,0.3)", borderBottom:"1px solid rgba(255,255,255,0.05)", borderTop:"1px solid rgba(255,255,255,0.05)" }}>Free Courts</div>
+              <div style={{ padding:"0.6rem 1rem", fontSize:"0.55rem", letterSpacing:"2px", textTransform:"uppercase", color:"rgba(0,0,0,0.3)", borderBottom:"1px solid rgba(0,0,0,0.06)", borderTop:"1px solid rgba(255,255,255,0.05)" }}>Free Courts</div>
               {FREE_COURTS.map((c, i) => (
                 <div key={i} style={{ display:"flex", alignItems:"center", gap:"0.75rem", padding:"0.75rem 1rem", borderBottom: i < FREE_COURTS.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none" }}>
-                  <span style={{ fontSize:"0.55rem", padding:"2px 7px", borderRadius:"100px", background:"rgba(255,255,255,0.05)", color:"rgba(255,255,255,0.35)" }}>Free</span>
+                  <span style={{ fontSize:"0.55rem", padding:"2px 7px", borderRadius:"100px", background:"rgba(255,255,255,0.05)", color:"rgba(0,0,0,0.35)" }}>Free</span>
                   <span style={{ flex:1, fontSize:"0.82rem" }}>{c}</span>
-                  <span style={{ fontSize:"0.6rem", color:"rgba(255,255,255,0.25)" }}>Open</span>
+                  <span style={{ fontSize:"0.6rem", color:"rgba(0,0,0,0.25)" }}>Open</span>
                 </div>
               ))}
-              <div style={{ padding:"0.75rem 1rem", textAlign:"center", fontSize:"0.72rem", color:"rgba(255,255,255,0.2)" }}>+ 20 more free courts on the courts page</div>
+              <div style={{ padding:"0.75rem 1rem", textAlign:"center", fontSize:"0.72rem", color:"rgba(0,0,0,0.2)" }}>+ 20 more free courts on the courts page</div>
             </div>
           </div>
 
           {/* Calendar */}
           <div style={{ marginBottom:"2rem" }}>
-            <div style={{ fontSize:"0.55rem", letterSpacing:"3px", textTransform:"uppercase", color:"rgba(255,255,255,0.35)", marginBottom:"0.75rem" }}>Session Calendar</div>
+            <div style={{ fontSize:"0.55rem", letterSpacing:"3px", textTransform:"uppercase", color:"rgba(0,0,0,0.35)", marginBottom:"0.75rem" }}>Session Calendar</div>
             <CalendarView playDays={member?.play_days || ["saturday","sunday"]} />
           </div>
 
           {/* Weather */}
           <div style={{ marginBottom:"2rem" }}>
-            <div style={{ fontSize:"0.55rem", letterSpacing:"3px", textTransform:"uppercase", color:"rgba(255,255,255,0.35)", marginBottom:"0.75rem" }}>Court Weather — 1hr Before Session</div>
+            <div style={{ fontSize:"0.55rem", letterSpacing:"3px", textTransform:"uppercase", color:"rgba(0,0,0,0.35)", marginBottom:"0.75rem" }}>Court Weather — 1hr Before Session</div>
             <div style={{ display:"flex", gap:"0.6rem", overflowX:"auto", paddingBottom:"0.5rem", scrollbarWidth:"none" }}>
               {DISTRICTS.map(d => {
                 const w = weather[d.name];
@@ -334,11 +332,11 @@ export default function DashboardPage() {
                 const temp = w?.main?.temp ? Math.round(w.main.temp) : "—";
                 const rating = PLAY_RATING[main];
                 return (
-                  <div key={d.name} style={{ background:"#0D1117", border:"1px solid rgba(255,255,255,0.07)", borderRadius:"12px", padding:"0.875rem 1rem", minWidth:"120px", flexShrink:0 }}>
-                    <div style={{ fontSize:"0.55rem", letterSpacing:"1px", textTransform:"uppercase", color:"rgba(255,255,255,0.3)", marginBottom:"0.3rem" }}>{d.name}</div>
+                  <div key={d.name} style={{ background:"#F8F8F8", border:"1px solid rgba(0,0,0,0.08)", borderRadius:"12px", padding:"0.875rem 1rem", minWidth:"120px", flexShrink:0 }}>
+                    <div style={{ fontSize:"0.55rem", letterSpacing:"1px", textTransform:"uppercase", color:"rgba(0,0,0,0.3)", marginBottom:"0.3rem" }}>{d.name}</div>
                     <div style={{ fontSize:"1.5rem", marginBottom:"0.2rem" }}>{icon}</div>
-                    <div style={{ fontFamily:"Bebas Neue, sans-serif", fontSize:"1.5rem", color:"#F5F2EE", lineHeight:1 }}>{temp}°C</div>
-                    <div style={{ fontSize:"0.5rem", color:"rgba(255,255,255,0.25)", margin:"0.2rem 0" }}>@ {d.name === "Lavington" ? "5pm" : "4pm"}</div>
+                    <div style={{ fontFamily:"Bebas Neue, sans-serif", fontSize:"1.5rem", color:"#1A1A1A", lineHeight:1 }}>{temp}°C</div>
+                    <div style={{ fontSize:"0.5rem", color:"rgba(0,0,0,0.25)", margin:"0.2rem 0" }}>@ {d.name === "Lavington" ? "5pm" : "4pm"}</div>
                     {rating && <div style={{ fontSize:"0.55rem", color:rating.color }}>{rating.label}</div>}
                   </div>
                 );
@@ -348,7 +346,7 @@ export default function DashboardPage() {
 
           {/* Sessions */}
           <div>
-            <div style={{ fontSize:"0.55rem", letterSpacing:"3px", textTransform:"uppercase", color:"rgba(255,255,255,0.35)", marginBottom:"0.75rem" }}>Upcoming Sessions</div>
+            <div style={{ fontSize:"0.55rem", letterSpacing:"3px", textTransform:"uppercase", color:"rgba(0,0,0,0.35)", marginBottom:"0.75rem" }}>Upcoming Sessions</div>
             <div style={{ display:"flex", gap:"0.4rem", marginBottom:"1rem" }}>
               {[["all","All"],["saturday","Saturday"],["sunday","Sunday"]].map(([val, label]) => (
                 <button key={val} onClick={() => setActiveTab(val)}
@@ -368,7 +366,7 @@ export default function DashboardPage() {
                 const wRating = wMain ? PLAY_RATING[wMain] : null;
                 const canJoin = isElite || (isBaller && s.type === "Outdoor");
                 return (
-                  <div key={key} style={{ background:"#0D1117", border:`1px solid ${isJoined ? "rgba(232,87,12,0.4)" : "rgba(255,255,255,0.07)"}`, borderRadius:"14px", padding:"1.25rem", transition:"all 0.3s" }}>
+                  <div key={key} style={{ background:"#F8F8F8", border:`1px solid ${isJoined ? "rgba(232,87,12,0.4)" : "rgba(255,255,255,0.07)"}`, borderRadius:"14px", padding:"1.25rem", transition:"all 0.3s" }}>
                     <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:"0.75rem" }}>
                       <div>
                         <div style={{ fontSize:"0.55rem", letterSpacing:"2px", textTransform:"uppercase", color:"#E8570C", marginBottom:"0.2rem" }}>{s.dayName} · {s.date.toLocaleDateString("en-KE",{month:"short",day:"numeric"})}</div>
@@ -377,17 +375,17 @@ export default function DashboardPage() {
                           <span style={{ fontSize:"0.55rem", background:"rgba(202,138,4,0.12)", color:"#CA8A04", padding:"1px 6px", borderRadius:"3px", border:"0.5px solid rgba(202,138,4,0.3)" }}>★ Elite</span>
                           <span style={{ fontSize:"0.55rem", background:s.type==="Indoor" ? "rgba(24,95,165,0.12)" : "rgba(59,109,17,0.12)", color:s.type==="Indoor" ? "#185FA5" : "#3B6D11", padding:"1px 6px", borderRadius:"3px" }}>{s.type}</span>
                         </div>
-                        <div style={{ fontSize:"0.72rem", color:"rgba(255,255,255,0.4)" }}>📍 {s.district} · 🕐 {s.time}</div>
+                        <div style={{ fontSize:"0.72rem", color:"rgba(0,0,0,0.4)" }}>📍 {s.district} · 🕐 {s.time}</div>
                       </div>
                       <div style={{ textAlign:"right", flexShrink:0 }}>
                         <div style={{ fontSize:"1.5rem" }}>{wIcon}</div>
-                        <div style={{ fontSize:"0.75rem", color:"rgba(255,255,255,0.5)" }}>{wTemp}°C</div>
-                        <div style={{ fontSize:"0.55rem", color:"rgba(255,255,255,0.25)" }}>@ {s.weatherTime}</div>
+                        <div style={{ fontSize:"0.75rem", color:"rgba(0,0,0,0.5)" }}>{wTemp}°C</div>
+                        <div style={{ fontSize:"0.55rem", color:"rgba(0,0,0,0.25)" }}>@ {s.weatherTime}</div>
                       </div>
                     </div>
                     {wRating && <div style={{ fontSize:"0.65rem", color:wRating.color, marginBottom:"0.75rem" }}>{wIcon} {wRating.label} at {s.weatherTime} — {s.district}</div>}
                     <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
-                      <div style={{ fontSize:"0.65rem", color:"rgba(255,255,255,0.3)" }}>
+                      <div style={{ fontSize:"0.65rem", color:"rgba(0,0,0,0.3)" }}>
                         {isJoined ? "✅ You are in" : `${s.max} spots · ${s.max - 3} remaining`}
                       </div>
                       {canJoin ? (
