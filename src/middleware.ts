@@ -132,8 +132,8 @@ export default auth(async function middleware(
   const isAuthRoute = pathname.startsWith('/api/auth') || pathname.startsWith('/auth/')
   const isApiRoute = pathname.startsWith('/api/')
 
-  if (isAuthRoute) {
-    // Auth routes: 10 requests per minute per IP
+  if (isAuthRoute && (isApiRoute || req.method !== 'GET')) {
+    // Auth routes: 10 requests per minute per IP (only API calls and form submissions, not page loads)
     const key = `auth:${ip}`
     if (!edgeRateLimit(key, 10, 60_000)) {
       return new Response(
