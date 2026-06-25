@@ -1,64 +1,54 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import Script from "next/script";
+import type { Metadata } from 'next'
+import { Inter, Space_Mono } from 'next/font/google'
+import { SessionProvider } from 'next-auth/react'
+import { ToastProvider } from '@/components/ui/Toast'
+import './globals.css'
 
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "SportsActivityLocation",
-  "name": "Splinters Basketball",
-  "description": "Find and book basketball courts in Nairobi. 31+ verified courts across Westlands, Kasarani, Karen, Kibera, Langata and more.",
-  "url": "https://splinters.co.ke",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Nairobi",
-    "addressCountry": "KE"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": "-1.2833",
-    "longitude": "36.8167"
-  },
-  "sameAs": [
-    "https://www.instagram.com/splinters_basketball_",
-    "https://www.tiktok.com/@splintersbasketball_ke"
-  ],
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.5",
-    "reviewCount": "127"
-  }
-};
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+const spaceMono = Space_Mono({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-space-mono',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://splinters.co.ke"),
+  metadataBase: new URL('https://splinters.co.ke'),
   title: {
-    default: "Splinters — Find Basketball Courts in Nairobi | 31+ Verified Courts",
-    template: "%s | Splinters Basketball Nairobi",
+    default: 'Splinters Basketball — Nairobi Pickup Community',
+    template: '%s | Splinters Basketball',
   },
-  description: "Discover and book basketball courts in Nairobi. 31+ verified courts across Westlands, Kasarani, Karen, Kibera, Langata and more. Find your court, join the community, play today.",
-};
+  description:
+    'Nairobi\'s pickup basketball community. Vote on games, track payments, and find courts. Every Saturday & Sunday.',
+  openGraph: {
+    siteName: 'Splinters Basketball',
+    locale: 'en_KE',
+  },
+}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${spaceMono.variable}`}>
       <head>
-        <Script src="https://www.googletagmanager.com/gtag/js?id=G-FWW054P0X0" strategy="afterInteractive" />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-FWW054P0X0');
-          `}
-        </Script>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
+          rel="stylesheet"
         />
       </head>
-      <body style={{ margin: 0, padding: 0, background: "#ffffff", color: "#111111", fontFamily: "DM Sans, sans-serif" }}>
-        {children}
+      <body className="font-sans bg-white text-navy antialiased">
+        <SessionProvider>
+          <ToastProvider>
+            {children}
+          </ToastProvider>
+        </SessionProvider>
       </body>
     </html>
-  );
+  )
 }
