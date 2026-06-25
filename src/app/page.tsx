@@ -209,7 +209,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-3 gap-[3px]">
             {GALLERY.map((c, i) => (
               <div key={i} className="relative overflow-hidden group" style={{aspectRatio:'3/4'}}>
-                <div className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style={{backgroundImage:`url(${c.src})`}} />
+                <div className="absolute inset-0 bg-cover transition-transform duration-500 group-hover:scale-105" style={{backgroundImage:`url(${c.src})`, backgroundPosition:'center top'}} />
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{background:'linear-gradient(to top, rgba(10,10,40,0.92) 0%, transparent 52%)'}} />
                 <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-1.5 group-hover:translate-y-0 transition-transform duration-300">
                   <p style={{fontFamily:"'Space Mono', monospace", fontSize:'9px', letterSpacing:'0.16em', textTransform:'uppercase', color:'#F4622A', marginBottom:'4px'}}>{c.district}</p>
@@ -220,14 +220,14 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="py-28 bg-white text-center">
-          <div className="max-w-[1160px] mx-auto px-8">
+        <section className="py-28 bg-white">
+          <div className="max-w-[1160px] mx-auto px-8 text-center">
             <div className="max-w-[560px] mx-auto">
               <p className="flex items-center justify-center gap-4 mb-5" style={{fontFamily:"'Space Mono', monospace", fontSize:'10px', letterSpacing:'0.22em', textTransform:'uppercase', color:'#F4622A'}}>
                 <span className="block w-9 h-px bg-[#F4622A]" />Join the Community<span className="block w-9 h-px bg-[#F4622A]" />
               </p>
               <h2 className="mb-5 leading-[0.95]" style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(52px, 7vw, 88px)', letterSpacing:'0.02em', color:'#1B2B6B'}}>
-                LOG IN AND FIND A<br /><span className="text-[#F4622A]">PICKUP GAME.</span>
+                LOG IN AND FIND A<br /><span style={{color:'#F4622A'}}>PICKUP GAME.</span>
               </h2>
               <p className="text-[15px] text-gray-400 leading-[1.75] mb-10 max-w-[420px] mx-auto">
                 Every Saturday and Sunday, Nairobi ballers vote on who is showing up. Sign in, cast your vote, and do not miss the run.
@@ -245,8 +245,8 @@ export default function HomePage() {
             <div className="flex flex-wrap justify-between gap-12 mb-12">
               <div>
                 <div className="flex items-center gap-2.5 mb-3.5">
-                  <Image src="/Splintersbasketball.png" alt="Splinters" width={40} height={40} className="h-10 w-auto brightness-0 invert opacity-90" />
-                  <span className="text-white" style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'26px', letterSpacing:'0.08em'}}>Splinters</span>
+                  <Image src="/Splintersbasketball.png" alt="Splinters" width={48} height={48} className="h-12 w-auto brightness-0 invert opacity-90" />
+                  <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'28px', letterSpacing:'0.08em', color:'#ffffff'}}>Splinters</span>
                 </div>
                 <p className="text-white/45 text-[13px] leading-relaxed max-w-[220px] mb-5">Every basketball court in Nairobi, mapped. Discover, join the community, and play.</p>
                 <div className="flex gap-1.5">
