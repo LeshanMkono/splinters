@@ -294,7 +294,6 @@ export default function HomePage() {
         </footer>
       </main>
       <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap');
         @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
       `}</style>
     </>
