@@ -22,7 +22,7 @@ export default function HomePage() {
   const [labelVisible, setLabelVisible] = useState(true)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const timerRef = useRef(null)
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 20)
@@ -43,7 +43,7 @@ export default function HomePage() {
     return () => clearTimeout(t)
   }, [current])
 
-  const goSlide = (i) => { setCurrent(i); resetTimer() }
+  const goSlide = (i: number) => { setCurrent(i); resetTimer() }
   const nextSlide = () => goSlide((current + 1) % SLIDES.length)
   const prevSlide = () => goSlide((current - 1 + SLIDES.length) % SLIDES.length)
 
@@ -70,7 +70,7 @@ export default function HomePage() {
         <div className="max-w-[1160px] mx-auto px-8 h-[68px] flex items-center gap-10">
           <Link href="/" className="flex items-center gap-2.5 flex-shrink-0">
             <Image src="/Splintersbasketball.png" alt="Splinters Basketball" width={44} height={44} className="h-11 w-auto" />
-            <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'26px', letterSpacing:'0.08em', color:'#1B2B6B'}}>Splinters</span>
+            <span style={{fontFamily:'var(--font-bebas), sans-serif', fontSize:'26px', letterSpacing:'0.08em', color:'#1B2B6B'}}>Splinters</span>
           </Link>
           <ul className="hidden md:flex items-center gap-0.5 flex-1">
             {['Courts','Schedule','Community','About'].map(item => (
@@ -114,10 +114,10 @@ export default function HomePage() {
 
           <div className="bg-[#1B2B6B] px-8 pt-9 pb-12">
             <div className="max-w-[1160px] mx-auto">
-              <p className="flex items-center gap-2.5 mb-3.5 transition-opacity duration-350" style={{fontFamily:"'Space Mono', monospace", fontSize:'10px', letterSpacing:'0.22em', textTransform:'uppercase', color:'#F4622A', opacity: labelVisible ? 1 : 0}}>
+              <p className="flex items-center gap-2.5 mb-3.5 transition-opacity duration-350" style={{fontFamily:'var(--font-mono), monospace', fontSize:'10px', letterSpacing:'0.22em', textTransform:'uppercase', color:'#F4622A', opacity: labelVisible ? 1 : 0}}>
                 <span className="block w-6 h-0.5 bg-[#F4622A] flex-shrink-0" />{label}
               </p>
-              <h1 className="text-white leading-[0.93] mb-[18px]" style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(52px, 8vw, 100px)', letterSpacing:'0.01em'}}>
+              <h1 className="text-white leading-[0.93] mb-[18px]" style={{fontFamily:'var(--font-bebas), sans-serif', fontSize:'clamp(52px, 8vw, 100px)', letterSpacing:'0.01em'}}>
                 FIND YOUR<br /><span className="text-[#F4622A]">COURT.</span>
               </h1>
               <p className="text-white/65 text-[15px] leading-[1.75] mb-7 max-w-[480px]">
@@ -136,7 +136,7 @@ export default function HomePage() {
             {[...Array(2)].map((_, rep) => (
               <span key={rep} className="inline-flex">
                 {['🏀 Saturday 5PM · Olive Crescent, Kileleshwa','Sunday 6PM · Parklands or NIS Lavington','KES 2,000 / month','31 courts mapped across Nairobi','M-Pesa Paybill 880100 · payslinters25','Supporting Kenya Basketball Federation'].map((item, i) => (
-                  <span key={i} className="inline-flex items-center gap-3.5 px-9" style={{fontFamily:"'Space Mono', monospace", fontSize:'10px', letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(255,255,255,0.7)'}}>
+                  <span key={i} className="inline-flex items-center gap-3.5 px-9" style={{fontFamily:'var(--font-mono), monospace', fontSize:'10px', letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(255,255,255,0.7)'}}>
                     {item}<span className="w-1 h-1 rounded-full bg-white/25 flex-shrink-0" />
                   </span>
                 ))}
@@ -149,10 +149,10 @@ export default function HomePage() {
           <div className="max-w-[1160px] mx-auto px-8">
             <div className="grid md:grid-cols-2 gap-24 items-center">
               <div>
-                <p className="flex items-center gap-2.5 mb-4" style={{fontFamily:"'Space Mono', monospace", fontSize:'10px', letterSpacing:'0.2em', textTransform:'uppercase', color:'#F4622A'}}>
+                <p className="flex items-center gap-2.5 mb-4" style={{fontFamily:'var(--font-mono), monospace', fontSize:'10px', letterSpacing:'0.2em', textTransform:'uppercase', color:'#F4622A'}}>
                   <span className="block w-5 h-0.5 bg-[#F4622A]" />About Splinters
                 </p>
-                <h2 className="mb-5 leading-[1.02]" style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(38px, 4.5vw, 58px)', letterSpacing:'0.02em', color:'#1B2B6B'}}>
+                <h2 className="mb-5 leading-[1.02]" style={{fontFamily:'var(--font-bebas), sans-serif', fontSize:'clamp(38px, 4.5vw, 58px)', letterSpacing:'0.02em', color:'#1B2B6B'}}>
                   WE CONNECT PEOPLE TO BASKETBALL <span className="text-[#F4622A]">COURTS</span> NEAR THEM
                 </h2>
                 <p className="text-[15px] text-gray-500 leading-[1.8] mb-8 max-w-[480px]">
@@ -169,8 +169,8 @@ export default function HomePage() {
               <div className="grid grid-cols-2 gap-0.5 bg-gray-200">
                 {[{num:'31',label:'Courts Mapped'},{num:'8',label:'Districts'},{num:'2',label:'Runs / Weekend'},{num:'2025',label:'Est. Nairobi'}].map(s => (
                   <div key={s.label} className="bg-white p-8">
-                    <div style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'52px', letterSpacing:'0.02em', color:'#F4622A', lineHeight:1}}>{s.num}</div>
-                    <div style={{fontFamily:"'Space Mono', monospace", fontSize:'9px', letterSpacing:'0.18em', textTransform:'uppercase', color:'#888', marginTop:'6px'}}>{s.label}</div>
+                    <div style={{fontFamily:'var(--font-bebas), sans-serif', fontSize:'52px', letterSpacing:'0.02em', color:'#F4622A', lineHeight:1}}>{s.num}</div>
+                    <div style={{fontFamily:'var(--font-mono), monospace', fontSize:'9px', letterSpacing:'0.18em', textTransform:'uppercase', color:'#888', marginTop:'6px'}}>{s.label}</div>
                   </div>
                 ))}
               </div>
@@ -180,19 +180,19 @@ export default function HomePage() {
 
         <section id="schedule" className="py-14 bg-[#1B2B6B]">
           <div className="max-w-[1160px] mx-auto px-8">
-            <p className="flex items-center gap-2.5 mb-7" style={{fontFamily:"'Space Mono', monospace", fontSize:'10px', letterSpacing:'0.2em', textTransform:'uppercase', color:'rgba(255,255,255,0.45)'}}>
+            <p className="flex items-center gap-2.5 mb-7" style={{fontFamily:'var(--font-mono), monospace', fontSize:'10px', letterSpacing:'0.2em', textTransform:'uppercase', color:'rgba(255,255,255,0.45)'}}>
               <span className="block w-5 h-0.5 bg-[#F4622A]" />Weekly Schedule
             </p>
-            <h2 className="text-white mb-9 leading-none" style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(38px, 4.5vw, 58px)', letterSpacing:'0.02em'}}>
+            <h2 className="text-white mb-9 leading-none" style={{fontFamily:'var(--font-bebas), sans-serif', fontSize:'clamp(38px, 4.5vw, 58px)', letterSpacing:'0.02em'}}>
               WHERE <span className="text-[#F4622A]">WE RUN</span>
             </h2>
             <div className="grid md:grid-cols-2 gap-0.5">
               {[{day:'Every Saturday',time:'5:00 PM',venue:'Olive Crescent International School',loc:'Kileleshwa, Nairobi'},{day:'Every Sunday',time:'6:00 PM',venue:'Parklands Sports Club / NIS Lavington',loc:'Rotating weekly · Check the poll'}].map(s => (
                 <div key={s.day} className="p-9 border border-white/10 bg-white/[0.03]">
-                  <p style={{fontFamily:"'Space Mono', monospace", fontSize:'10px', letterSpacing:'0.2em', textTransform:'uppercase', color:'#F4622A', marginBottom:'12px'}}>{s.day}</p>
-                  <p className="text-white leading-none mb-2" style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'48px', letterSpacing:'0.02em'}}>{s.time}</p>
+                  <p style={{fontFamily:'var(--font-mono), monospace', fontSize:'10px', letterSpacing:'0.2em', textTransform:'uppercase', color:'#F4622A', marginBottom:'12px'}}>{s.day}</p>
+                  <p className="text-white leading-none mb-2" style={{fontFamily:'var(--font-bebas), sans-serif', fontSize:'48px', letterSpacing:'0.02em'}}>{s.time}</p>
                   <p className="text-white/65 text-[14px] mb-1">{s.venue}</p>
-                  <p style={{fontFamily:"'Space Mono', monospace", fontSize:'12px', letterSpacing:'0.05em', color:'rgba(255,255,255,0.38)'}}>{s.loc}</p>
+                  <p style={{fontFamily:'var(--font-mono), monospace', fontSize:'12px', letterSpacing:'0.05em', color:'rgba(255,255,255,0.38)'}}>{s.loc}</p>
                 </div>
               ))}
             </div>
@@ -201,10 +201,10 @@ export default function HomePage() {
 
         <section id="courts" className="pt-24 bg-white">
           <div className="max-w-[1160px] mx-auto px-8 mb-10">
-            <p className="flex items-center gap-2.5 mb-4" style={{fontFamily:"'Space Mono', monospace", fontSize:'10px', letterSpacing:'0.2em', textTransform:'uppercase', color:'#F4622A'}}>
+            <p className="flex items-center gap-2.5 mb-4" style={{fontFamily:'var(--font-mono), monospace', fontSize:'10px', letterSpacing:'0.2em', textTransform:'uppercase', color:'#F4622A'}}>
               <span className="block w-5 h-0.5 bg-[#F4622A]" />Our Courts
             </p>
-            <h2 style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(38px, 4.5vw, 58px)', letterSpacing:'0.02em', color:'#1B2B6B'}}>WHERE WE PLAY</h2>
+            <h2 style={{fontFamily:'var(--font-bebas), sans-serif', fontSize:'clamp(38px, 4.5vw, 58px)', letterSpacing:'0.02em', color:'#1B2B6B'}}>WHERE WE PLAY</h2>
           </div>
           <div className="grid md:grid-cols-3 gap-[3px]">
             {GALLERY.map((c, i) => (
@@ -212,7 +212,7 @@ export default function HomePage() {
                 <div className="absolute inset-0 bg-cover transition-transform duration-500 group-hover:scale-105" style={{backgroundImage:`url(${c.src})`, backgroundPosition:'center top'}} />
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{background:'linear-gradient(to top, rgba(10,10,40,0.92) 0%, transparent 52%)'}} />
                 <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-1.5 group-hover:translate-y-0 transition-transform duration-300">
-                  <p style={{fontFamily:"'Space Mono', monospace", fontSize:'9px', letterSpacing:'0.16em', textTransform:'uppercase', color:'#F4622A', marginBottom:'4px'}}>{c.district}</p>
+                  <p style={{fontFamily:'var(--font-mono), monospace', fontSize:'9px', letterSpacing:'0.16em', textTransform:'uppercase', color:'#F4622A', marginBottom:'4px'}}>{c.district}</p>
                   <p className="text-white text-[14px] font-semibold">{c.name}</p>
                 </div>
               </div>
@@ -223,10 +223,10 @@ export default function HomePage() {
         <section className="py-28 bg-white">
           <div className="max-w-[1160px] mx-auto px-8 text-center">
             <div className="max-w-[560px] mx-auto">
-              <p className="flex items-center justify-center gap-4 mb-5" style={{fontFamily:"'Space Mono', monospace", fontSize:'10px', letterSpacing:'0.22em', textTransform:'uppercase', color:'#F4622A'}}>
+              <p className="flex items-center justify-center gap-4 mb-5" style={{fontFamily:'var(--font-mono), monospace', fontSize:'10px', letterSpacing:'0.22em', textTransform:'uppercase', color:'#F4622A'}}>
                 <span className="block w-9 h-px bg-[#F4622A]" />Join the Community<span className="block w-9 h-px bg-[#F4622A]" />
               </p>
-              <h2 className="mb-5 leading-[0.95]" style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(52px, 7vw, 88px)', letterSpacing:'0.02em', color:'#1B2B6B'}}>
+              <h2 className="mb-5 leading-[0.95]" style={{fontFamily:'var(--font-bebas), sans-serif', fontSize:'clamp(52px, 7vw, 88px)', letterSpacing:'0.02em', color:'#1B2B6B'}}>
                 LOG IN AND FIND A<br /><span style={{color:'#F4622A'}}>PICKUP GAME.</span>
               </h2>
               <p className="text-[15px] text-gray-400 leading-[1.75] mb-10 max-w-[420px] mx-auto">
@@ -246,7 +246,7 @@ export default function HomePage() {
               <div>
                 <div className="flex items-center gap-2.5 mb-3.5">
                   <Image src="/Splintersbasketball.png" alt="Splinters" width={48} height={48} className="h-12 w-auto brightness-0 invert opacity-90" />
-                  <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'28px', letterSpacing:'0.08em', color:'#ffffff'}}>Splinters</span>
+                  <span style={{fontFamily:'var(--font-bebas), sans-serif', fontSize:'28px', letterSpacing:'0.08em', color:'#ffffff'}}>Splinters</span>
                 </div>
                 <p className="text-white/45 text-[13px] leading-relaxed max-w-[220px] mb-5">Every basketball court in Nairobi, mapped. Discover, join the community, and play.</p>
                 <div className="flex gap-1.5">
@@ -268,7 +268,7 @@ export default function HomePage() {
                   {title:'Kenya Basketball', links:[['KBF Official','https://kenyabasketballfederation.org'],['About Splinters','#about'],['Contact','mailto:basketballsplinter@gmail.com'],['Privacy','/privacy']]},
                 ].map(col => (
                   <div key={col.title}>
-                    <p className="mb-4" style={{fontFamily:"'Space Mono', monospace", fontSize:'9px', letterSpacing:'0.2em', textTransform:'uppercase', color:'rgba(255,255,255,0.5)'}}>{col.title}</p>
+                    <p className="mb-4" style={{fontFamily:'var(--font-mono), monospace', fontSize:'9px', letterSpacing:'0.2em', textTransform:'uppercase', color:'rgba(255,255,255,0.5)'}}>{col.title}</p>
                     <ul className="flex flex-col gap-2.5">
                       {col.links.map(([label, href]) => (
                         <li key={label}><a href={href} className="text-[13px] text-white/60 hover:text-[#F4622A] transition-colors">{label}</a></li>
@@ -284,8 +284,8 @@ export default function HomePage() {
                 {[{label:'M-Pesa Paybill',val:'880100'},{label:'Account',val:'payslinters25'},{label:'Monthly',val:'KES 2,000'}].map((item, i) => (
                   <div key={item.label} className="flex items-center gap-2">
                     {i > 0 && <span className="w-px h-4 bg-white/15" />}
-                    <span style={{fontFamily:"'Space Mono', monospace", fontSize:'9px', letterSpacing:'0.12em', textTransform:'uppercase', color:'rgba(255,255,255,0.35)'}}>{item.label}</span>
-                    <span style={{fontFamily:"'Space Mono', monospace", fontSize:'13px', fontWeight:700, color:'#F4622A'}}>{item.val}</span>
+                    <span style={{fontFamily:'var(--font-mono), monospace', fontSize:'9px', letterSpacing:'0.12em', textTransform:'uppercase', color:'rgba(255,255,255,0.35)'}}>{item.label}</span>
+                    <span style={{fontFamily:'var(--font-mono), monospace', fontSize:'13px', fontWeight:700, color:'#F4622A'}}>{item.val}</span>
                   </div>
                 ))}
               </div>

@@ -59,7 +59,7 @@ export default function FooterLegacy() {
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.25rem" }}>
               <img src="/splinters-logo.jpg" alt="Splinters" style={{ width: "44px", height: "44px", borderRadius: "50%", objectFit: "contain" }} />
-              <span style={{ fontFamily: "Bebas Neue, sans-serif", fontSize: "1.4rem", color: "#E8570C", letterSpacing: "3px" }}>SPLINTERS</span>
+              <span style={{ fontFamily: "var(--font-bebas), sans-serif", fontSize: "1.4rem", color: "#E8570C", letterSpacing: "3px" }}>SPLINTERS</span>
             </div>
             <p style={{ fontSize: "0.85rem", color: "#555555", lineHeight: 1.8, marginBottom: "1.5rem", maxWidth: "280px" }}>
               Every basketball court in Nairobi, mapped. Discover, book, and connect with the city basketball community.
@@ -127,7 +127,7 @@ export default function FooterLegacy() {
         <div className="footer-stats" style={{ display: "flex", justifyContent: "center", gap: "4rem", marginBottom: "3rem", flexWrap: "wrap" }}>
           {[["31", "Courts Mapped"], ["13", "Districts"], ["3", "Experiences"], ["\u221e", "Community"]].map(([num, label]) => (
             <div key={label} style={{ textAlign: "center" }}>
-              <div style={{ fontFamily: "Bebas Neue, sans-serif", fontSize: "2.2rem", color: "#E8570C", lineHeight: 1 }}>{num}</div>
+              <div style={{ fontFamily: "var(--font-bebas), sans-serif", fontSize: "2.2rem", color: "#E8570C", lineHeight: 1 }}>{num}</div>
               <div style={{ fontSize: "0.62rem", color: "#888888", letterSpacing: "1.5px", textTransform: "uppercase", marginTop: "3px" }}>{label}</div>
             </div>
           ))}

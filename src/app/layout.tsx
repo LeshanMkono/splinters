@@ -1,8 +1,15 @@
 import type { Metadata } from 'next'
-import { Inter, Space_Mono } from 'next/font/google'
+import { Bebas_Neue, Inter, Space_Mono } from 'next/font/google'
 import { SessionProvider } from 'next-auth/react'
 import { ToastProvider } from '@/components/ui/Toast'
 import './globals.css'
+
+const bebasNeue = Bebas_Neue({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-bebas',
+  display: 'swap',
+})
 
 const inter = Inter({
   subsets: ['latin'],
@@ -13,7 +20,7 @@ const inter = Inter({
 const spaceMono = Space_Mono({
   subsets: ['latin'],
   weight: ['400', '700'],
-  variable: '--font-space-mono',
+  variable: '--font-mono',
   display: 'swap',
 })
 
@@ -33,15 +40,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${spaceMono.variable}`}>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html
+      lang="en"
+      className={`${bebasNeue.variable} ${inter.variable} ${spaceMono.variable}`}
+    >
       <body className="font-sans bg-white text-navy antialiased">
         <SessionProvider>
           <ToastProvider>

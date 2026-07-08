@@ -14,10 +14,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // Remove ignoreBuildErrors before production deploy
-  typescript: {
-    ignoreBuildErrors: true,
-  },
 };
 
 export default nextConfig;
