@@ -21,50 +21,56 @@
 }
 
 /* ── Base reset ───────────────────────────────────────────────────────────── */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* Wrapped in @layer base so Tailwind's utility layer (text-white, text-orange,
+   etc.) still wins the cascade — unlayered CSS always beats layered CSS
+   regardless of specificity, which silently broke every text-color utility
+   applied to a heading. */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-}
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
 
-body {
-  background: #FFFFFF;
-  color: #555555;
-  font-family: var(--font-inter), sans-serif;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  body {
+    background: #FFFFFF;
+    color: #555555;
+    font-family: var(--font-inter), sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-/* ── Typography defaults ─────────────────────────────────────────────────── */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-bebas), sans-serif;
-  color: #1B2B6B;
-  line-height: 1.1;
-  letter-spacing: 0.02em;
-}
+  /* ── Typography defaults ───────────────────────────────────────────────── */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-bebas), sans-serif;
+    color: #1B2B6B;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+  }
 
-/* ── Link reset ───────────────────────────────────────────────────────────── */
-a {
-  color: inherit;
-  text-decoration: none;
-}
+  /* ── Link reset ───────────────────────────────────────────────────────── */
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 
-/* ── Image defaults ───────────────────────────────────────────────────────── */
-img, video {
-  display: block;
-  max-width: 100%;
-}
+  /* ── Image defaults ──────────────────────────────────────────────────── */
+  img, video {
+    display: block;
+    max-width: 100%;
+  }
 
-/* ── Form reset ───────────────────────────────────────────────────────────── */
-input, textarea, select, button {
-  font-family: inherit;
-  font-size: inherit;
+  /* ── Form reset ──────────────────────────────────────────────────────── */
+  input, textarea, select, button {
+    font-family: inherit;
+    font-size: inherit;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -72,160 +78,162 @@ input, textarea, select, button {
    (CSS-only helpers that Tailwind classes don't cover)
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* ── Orange ticker strip ─────────────────────────────────────────────────── */
-@keyframes ticker {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+@layer components {
+  /* ── Orange ticker strip ───────────────────────────────────────────────── */
+  @keyframes ticker {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .ticker-track {
+    display: flex;
+    width: max-content;
+    animation: ticker 30s linear infinite;
+  }
+
+  .ticker-track:hover {
+    animation-play-state: paused;
+  }
+
+  /* ── Hero slider ──────────────────────────────────────────────────────── */
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center center;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+  }
+
+  .hero-slide.active {
+    opacity: 1;
+  }
+
+  /* ── Gallery hover overlay ───────────────────────────────────────────── */
+  .gallery-card .overlay {
+    background: linear-gradient(to top, rgba(27, 43, 107, 0.85) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .gallery-card:hover .overlay {
+    opacity: 1;
+  }
+
+  /* ── Vote progress bars ───────────────────────────────────────────────── */
+  .vote-bar {
+    height: 8px;
+    border-radius: 4px;
+    background: #E5E7EB;
+    overflow: hidden;
+  }
+
+  .vote-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ── Scroll-reveal animation ────────────────────────────────────────── */
+  @keyframes reveal-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal-up {
+    animation: reveal-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-up,
+    .ticker-track,
+    .hero-slide { animation: none !important; transition: none !important; }
+    .hero-slide.active { opacity: 1 !important; }
+  }
+
+  /* ── Calendar grid ──────────────────────────────────────────────────── */
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+  }
+
+  /* ── Status badges ─────────────────────────────────────────────────── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 10px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: var(--font-mono), monospace;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .badge-active    { background: #DCFCE7; color: #166534; }
+  .badge-pending   { background: #FEF9C3; color: #854D0E; }
+  .badge-suspended { background: #FEE2E2; color: #991B1B; }
+  .badge-guest     { background: #F3F4F6; color: #374151; }
+  .badge-confirmed { background: #DCFCE7; color: #166534; }
+  .badge-rejected  { background: #FEE2E2; color: #991B1B; }
+
+  /* ── Map container ─────────────────────────────────────────────────── */
+  .map-container {
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  /* ── Drag upload zone ──────────────────────────────────────────────── */
+  .drop-zone {
+    border: 2px dashed #E5E7EB;
+    border-radius: 12px;
+    transition: border-color 0.2s, background-color 0.2s;
+    cursor: pointer;
+  }
+
+  .drop-zone.dragging {
+    border-color: #F4622A;
+    background-color: #FFF7F4;
+  }
+
+  /* ── Toast notifications ───────────────────────────────────────────── */
+  @keyframes slide-in-right {
+    from { opacity: 0; transform: translateX(100%); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes slide-out-right {
+    from { opacity: 1; transform: translateX(0); }
+    to   { opacity: 0; transform: translateX(100%); }
+  }
+
+  .toast-enter { animation: slide-in-right 0.3s ease forwards; }
+  .toast-exit  { animation: slide-out-right 0.3s ease forwards; }
+
+  /* ── Mobile nav sidebar ────────────────────────────────────────────── */
+  .mobile-nav {
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .mobile-nav.open {
+    transform: translateX(0);
+  }
+
+  /* ── Page content lock (map blur) ─────────────────────────────────── */
+  .content-locked {
+    filter: blur(6px);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ── Scrollbar slim ───────────────────────────────────────────────── */
+  ::-webkit-scrollbar       { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
 }
-
-.ticker-track {
-  display: flex;
-  width: max-content;
-  animation: ticker 30s linear infinite;
-}
-
-.ticker-track:hover {
-  animation-play-state: paused;
-}
-
-/* ── Hero slider ─────────────────────────────────────────────────────────── */
-.hero-slide {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center center;
-  opacity: 0;
-  transition: opacity 1.2s ease-in-out;
-}
-
-.hero-slide.active {
-  opacity: 1;
-}
-
-/* ── Gallery hover overlay ───────────────────────────────────────────────── */
-.gallery-card .overlay {
-  background: linear-gradient(to top, rgba(27, 43, 107, 0.85) 0%, transparent 60%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.gallery-card:hover .overlay {
-  opacity: 1;
-}
-
-/* ── Vote progress bars ───────────────────────────────────────────────────── */
-.vote-bar {
-  height: 8px;
-  border-radius: 4px;
-  background: #E5E7EB;
-  overflow: hidden;
-}
-
-.vote-bar-fill {
-  height: 100%;
-  border-radius: 4px;
-  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* ── Scroll-reveal animation ─────────────────────────────────────────────── */
-@keyframes reveal-up {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.reveal-up {
-  animation: reveal-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal-up,
-  .ticker-track,
-  .hero-slide { animation: none !important; transition: none !important; }
-  .hero-slide.active { opacity: 1 !important; }
-}
-
-/* ── Calendar grid ───────────────────────────────────────────────────────── */
-.cal-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 2px;
-}
-
-/* ── Status badges ───────────────────────────────────────────────────────── */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px 10px;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  font-family: var(--font-mono), monospace;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-.badge-active    { background: #DCFCE7; color: #166534; }
-.badge-pending   { background: #FEF9C3; color: #854D0E; }
-.badge-suspended { background: #FEE2E2; color: #991B1B; }
-.badge-guest     { background: #F3F4F6; color: #374151; }
-.badge-confirmed { background: #DCFCE7; color: #166534; }
-.badge-rejected  { background: #FEE2E2; color: #991B1B; }
-
-/* ── Map container ───────────────────────────────────────────────────────── */
-.map-container {
-  width: 100%;
-  height: 100%;
-  min-height: 500px;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-/* ── Drag upload zone ────────────────────────────────────────────────────── */
-.drop-zone {
-  border: 2px dashed #E5E7EB;
-  border-radius: 12px;
-  transition: border-color 0.2s, background-color 0.2s;
-  cursor: pointer;
-}
-
-.drop-zone.dragging {
-  border-color: #F4622A;
-  background-color: #FFF7F4;
-}
-
-/* ── Toast notifications ─────────────────────────────────────────────────── */
-@keyframes slide-in-right {
-  from { opacity: 0; transform: translateX(100%); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes slide-out-right {
-  from { opacity: 1; transform: translateX(0); }
-  to   { opacity: 0; transform: translateX(100%); }
-}
-
-.toast-enter { animation: slide-in-right 0.3s ease forwards; }
-.toast-exit  { animation: slide-out-right 0.3s ease forwards; }
-
-/* ── Mobile nav sidebar ──────────────────────────────────────────────────── */
-.mobile-nav {
-  transform: translateX(100%);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.mobile-nav.open {
-  transform: translateX(0);
-}
-
-/* ── Page content lock (map blur) ────────────────────────────────────────── */
-.content-locked {
-  filter: blur(6px);
-  pointer-events: none;
-  user-select: none;
-}
-
-/* ── Scrollbar slim ──────────────────────────────────────────────────────── */
-::-webkit-scrollbar       { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #94A3B8; }

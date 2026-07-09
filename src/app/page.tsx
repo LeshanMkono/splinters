@@ -99,7 +99,14 @@ export default function HomePage() {
           <div className="relative w-full overflow-hidden" style={{height:'58vh', minHeight:'300px', maxHeight:'560px'}}>
             {SLIDES.map((slide, i) => (
               <div key={slide.id} className="absolute inset-0 transition-opacity duration-[1200ms]" style={{opacity: i === current ? 1 : 0}}>
-                <div className="absolute inset-0 bg-cover bg-center" style={{backgroundImage:`url(${slide.src})`}} />
+                <Image
+                  src={slide.src}
+                  alt={slide.label}
+                  fill
+                  sizes="100vw"
+                  priority={i === 0}
+                  className="object-cover"
+                />
                 <div className="absolute inset-0" style={{background:'linear-gradient(180deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0) 35%, rgba(27,43,107,0.55) 85%, rgba(27,43,107,0.95) 100%)'}} />
               </div>
             ))}
@@ -209,7 +216,14 @@ export default function HomePage() {
           <div className="grid md:grid-cols-3 gap-[3px]">
             {GALLERY.map((c, i) => (
               <div key={i} className="relative overflow-hidden group" style={{aspectRatio:'3/4'}}>
-                <div className="absolute inset-0 bg-cover transition-transform duration-500 group-hover:scale-105" style={{backgroundImage:`url(${c.src})`, backgroundPosition:'center top'}} />
+                <Image
+                  src={c.src}
+                  alt={c.name}
+                  fill
+                  loading="lazy"
+                  sizes="(max-width: 767px) 100vw, 33vw"
+                  className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                />
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{background:'linear-gradient(to top, rgba(10,10,40,0.92) 0%, transparent 52%)'}} />
                 <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-1.5 group-hover:translate-y-0 transition-transform duration-300">
                   <p style={{fontFamily:'var(--font-mono), monospace', fontSize:'9px', letterSpacing:'0.16em', textTransform:'uppercase', color:'#F4622A', marginBottom:'4px'}}>{c.district}</p>
