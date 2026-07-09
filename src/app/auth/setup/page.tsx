@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
@@ -12,7 +12,7 @@ export default function SetupPage() {
   const [checking, setChecking] = useState(false)
   const [available, setAvailable] = useState<boolean | null>(null)
   const [error, setError] = useState('')
-  const [isPending, startTransition] = useTransition()
+  const [isSaving, setIsSaving] = useState(false)
 
   async function checkNickname(value: string) {
     setNickname(value)
@@ -29,17 +29,44 @@ export default function SetupPage() {
     e.preventDefault()
     setError('')
     if (!available) { setError('Please choose an available nickname.'); return }
-    startTransition(async () => {
+
+    setIsSaving(true)
+
+    let data: { success?: boolean; nickname?: string; error?: string }
+    try {
       const res = await fetch('/api/user/set-nickname', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nickname }),
       })
-      const data = await res.json()
-      if (!res.ok) { setError(data.error || 'Failed to set nickname.'); return }
-      await update({ nickname, nickname_set: true })
-      router.push('/dashboard')
-    })
+      data = await res.json()
+      if (!res.ok) {
+        setError(data.error || 'Failed to set nickname.')
+        setIsSaving(false)
+        return
+      }
+    } catch {
+      setError('Network error. Please try again.')
+      setIsSaving(false)
+      return
+    }
+
+    // Refresh the session so the new nickname/nickname_set are available on
+    // /dashboard. If update() throws or isn't available, fall back to a
+    // router refresh so the redirect still gets a re-validated session.
+    try {
+      if (typeof update === 'function') {
+        await update({ nickname: data.nickname ?? nickname, nickname_set: true })
+      } else {
+        router.refresh()
+      }
+    } catch {
+      router.refresh()
+    }
+
+    // Deliberately leave isSaving true — the page is navigating away, so the
+    // button should keep showing "Saving…" until the redirect completes.
+    router.push('/dashboard?welcome=1')
   }
 
   const inputClass =
@@ -101,10 +128,10 @@ export default function SetupPage() {
 
             <button
               type="submit"
-              disabled={isPending || !available}
+              disabled={isSaving || !available}
               className="w-full py-3 rounded-lg bg-orange text-white font-semibold text-sm hover:bg-orange-dark disabled:opacity-50 transition-colors"
             >
-              {isPending ? 'Saving…' : 'Set Nickname & Continue'}
+              {isSaving ? 'Saving…' : 'Set Nickname & Continue'}
             </button>
           </form>
         </div>
