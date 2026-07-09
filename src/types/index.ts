@@ -36,11 +36,6 @@ export interface User {
   created_at: string
 }
 
-export type UserPublic = Pick<
-  User,
-  'id' | 'nickname' | 'full_name' | 'avatar_url' | 'role' | 'membership_status'
->
-
 // ─────────────────────────────────────────────────────────────────────────────
 // PAYMENT
 // ─────────────────────────────────────────────────────────────────────────────
@@ -155,16 +150,6 @@ export interface Court {
   lighting: boolean
   description: string | null
   image_url: string | null
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// API RESPONSE ENVELOPE
-// ─────────────────────────────────────────────────────────────────────────────
-
-export interface ApiResponse<T = unknown> {
-  success: boolean
-  data?: T
-  error?: string
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

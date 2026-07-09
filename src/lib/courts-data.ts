@@ -513,14 +513,4 @@ export const COURTS: Court[] = [
   },
 ]
 
-export const FEATURED_COURTS = COURTS.filter(c => c.is_featured)
-
 export const COURT_DISTRICTS = [...new Set(COURTS.map(c => c.district))].sort()
-
-export function getCourtBySlug(slug: string): Court | undefined {
-  return COURTS.find(c => c.slug === slug)
-}
-
-export function getCourtsByDistrict(district: string): Court[] {
-  return COURTS.filter(c => c.district === district)
-}

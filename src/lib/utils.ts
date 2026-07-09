@@ -48,23 +48,6 @@ export function getCurrentWeekIds(): { sat: string; sun: string } {
   }
 }
 
-export function weekIdToLabel(weekId: string): string {
-  // "2025-W24-SAT" → "Sat, Jun 14 2025"
-  const [yearStr, weekPart, dayStr] = weekId.split('-')
-  const week = parseInt(weekPart.replace('W', ''), 10)
-  const year = parseInt(yearStr, 10)
-  // ISO week 1 starts on the Monday of the week containing Jan 4
-  const jan4 = new Date(year, 0, 4)
-  const startOfWeek1 = new Date(jan4)
-  startOfWeek1.setDate(jan4.getDate() - ((jan4.getDay() + 6) % 7))
-  const weekStart = new Date(startOfWeek1)
-  weekStart.setDate(startOfWeek1.getDate() + (week - 1) * 7)
-  const offset = dayStr === 'SAT' ? 5 : 6
-  const targetDate = new Date(weekStart)
-  targetDate.setDate(weekStart.getDate() + offset)
-  return format(targetDate, 'EEE, MMM d yyyy')
-}
-
 // ─────────────────────────────────────────────────────────────────────────────
 // DATE FORMATTING
 // ─────────────────────────────────────────────────────────────────────────────
@@ -83,59 +66,12 @@ export function formatDateTime(date: Date | string | null | undefined): string {
   return format(d, 'dd MMM yyyy, HH:mm')
 }
 
-export function formatMonthYear(date: Date | string | null | undefined): string {
-  if (!date) return '—'
-  const d = typeof date === 'string' ? parseISO(date) : date
-  if (!isValid(d)) return '—'
-  return format(d, 'MMMM yyyy')
-}
-
-/** Returns the current billing month in "YYYY-MM" format (EAT) */
-export function getCurrentMonth(): string {
-  return format(getEATDate(), 'yyyy-MM')
-}
-
 // ─────────────────────────────────────────────────────────────────────────────
 // CURRENCY
 // ─────────────────────────────────────────────────────────────────────────────
 
 export function formatKES(amount: number): string {
   return `KES ${amount.toLocaleString('en-KE')}`
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// PHONE NORMALIZER — Kenyan numbers → +2547XXXXXXXX
-// ─────────────────────────────────────────────────────────────────────────────
-
-export function normalizeKenyanPhone(raw: string): string {
-  const stripped = raw.replace(/[\s\-().+]/g, '')
-
-  // Already +2547... or +2541...
-  if (/^\+254[17]\d{8}$/.test('+' + stripped) || /^\+254[17]\d{8}$/.test(stripped)) {
-    return stripped.startsWith('+') ? stripped : '+' + stripped
-  }
-
-  // 2547XXXXXXXX (no +)
-  if (/^254[17]\d{8}$/.test(stripped)) {
-    return '+' + stripped
-  }
-
-  // 07XXXXXXXX or 01XXXXXXXX
-  if (/^0[17]\d{8}$/.test(stripped)) {
-    return '+254' + stripped.slice(1)
-  }
-
-  // 7XXXXXXXX or 1XXXXXXXX (9 digits)
-  if (/^[17]\d{8}$/.test(stripped)) {
-    return '+254' + stripped
-  }
-
-  return raw // return original if unrecognized
-}
-
-export function isValidKenyanPhone(phone: string): boolean {
-  const normalized = normalizeKenyanPhone(phone)
-  return /^\+254[17]\d{8}$/.test(normalized)
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -218,26 +154,8 @@ export function normalizeMpesaCode(code: string): string {
   return code.trim().toUpperCase().replace(/\s+/g, '')
 }
 
-/** Sanitize social media handles — strips leading @ */
-export function normalizeHandle(handle: string): string {
-  return handle.trim().replace(/^@+/, '')
-}
-
 /** Truncate text to a max length with ellipsis */
 export function truncate(text: string, maxLength: number): string {
   if (text.length <= maxLength) return text
   return text.slice(0, maxLength - 1) + '…'
-}
-
-/** Check if a date falls on a weekend (EAT) */
-export function isWeekend(date: Date): boolean {
-  const eatDate = getEATDate(date)
-  const day = eatDate.getUTCDay()
-  return day === 0 || day === 6 // Sunday = 0, Saturday = 6
-}
-
-/** Generate a pre-filled WhatsApp message for payment confirmation */
-export function buildWhatsAppPaymentMessage(mpesaRef: string, name: string): string {
-  const msg = `Hi Splinters Basketball! I've paid my membership fee.\n\nName: ${name}\nM-Pesa Ref: ${mpesaRef}\nAmount: KES 2,000\nPaybill: 880100 / Account: payslinters25\n\nPlease confirm my membership. Thank you!`
-  return `https://wa.me/254?text=${encodeURIComponent(msg)}`
 }

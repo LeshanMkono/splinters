@@ -14,15 +14,6 @@ export async function hashIP(ip: string): Promise<string> {
   return hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
 }
 
-/** Extract real IP from request headers, respecting Vercel/proxy forwarding */
-export function getClientIP(req: Request): string {
-  return (
-    req.headers.get('x-real-ip') ||
-    req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
-    '0.0.0.0'
-  )
-}
-
 // ─────────────────────────────────────────────────────────────────────────────
 // BRUTE FORCE PROTECTION
 // ─────────────────────────────────────────────────────────────────────────────
