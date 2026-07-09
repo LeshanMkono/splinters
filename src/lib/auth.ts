@@ -5,6 +5,7 @@ import { z } from 'zod'
 import { authConfig } from './auth.config'
 import { createServiceClient } from './supabase'
 import { verifyPassword } from './utils'
+import { checkIPLocked, clearLoginAttempts, getClientIP, hashIP, recordLoginFailure } from './security'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // TYPE AUGMENTATION
@@ -121,16 +122,32 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials) {
+      async authorize(credentials, request) {
+        // Lockout is enforced here, server-side, so it can't be bypassed or
+        // self-served by an attacker calling a public endpoint directly.
+        const ip = getClientIP(request)
+        const ipHash = await hashIP(ip)
+
+        const { locked } = await checkIPLocked(ipHash)
+        if (locked) return null
+
         const parsed = credentialsSchema.safeParse(credentials)
         if (!parsed.success) return null
 
         const { email, password } = parsed.data
         const user = await getUserByEmail(email)
-        if (!user || !user.password_hash) return null
+        if (!user || !user.password_hash) {
+          await recordLoginFailure(ipHash, email)
+          return null
+        }
 
         const valid = await verifyPassword(password, user.password_hash)
-        if (!valid) return null
+        if (!valid) {
+          await recordLoginFailure(ipHash, email)
+          return null
+        }
+
+        await clearLoginAttempts(ipHash)
 
         return {
           id: user.id,
@@ -167,7 +184,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return true
     },
 
-    async jwt({ token, user, trigger, session }) {
+    async jwt({ token, user, trigger }) {
       // On initial sign-in, populate token from user object
       if (user) {
         token.id = user.id
@@ -177,13 +194,24 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.membership_status = (user as any).membership_status ?? 'guest'
       }
 
-      // On session update (e.g., after nickname is set)
-      if (trigger === 'update' && session) {
-        if (session.nickname !== undefined) token.nickname = session.nickname
-        if (session.nickname_set !== undefined) token.nickname_set = session.nickname_set
-        if (session.role !== undefined) token.role = session.role
-        if (session.membership_status !== undefined) {
-          token.membership_status = session.membership_status
+      // On session update (e.g., after nickname is set), never trust
+      // client-supplied session data for these fields — any authenticated
+      // client can call NextAuth's update() with an arbitrary payload, and
+      // trusting it verbatim would be a privilege-escalation path. Re-fetch
+      // fresh values from the database instead.
+      if (trigger === 'update' && token.id) {
+        const supabase = createServiceClient()
+        const { data } = await supabase
+          .from('users')
+          .select('role, nickname, nickname_set, membership_status')
+          .eq('id', token.id as string)
+          .single()
+
+        if (data) {
+          token.role = data.role
+          token.nickname = data.nickname
+          token.nickname_set = data.nickname_set
+          token.membership_status = data.membership_status
         }
       }
 

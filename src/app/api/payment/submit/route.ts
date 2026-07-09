@@ -5,26 +5,31 @@ import { uploadPaymentScreenshot } from '@/lib/supabase'
 import { normalizeMpesaCode } from '@/lib/utils'
 import { checkRateLimit } from '@/lib/security'
 
+// Membership fee is fixed — never trust a client-supplied amount.
+const MEMBERSHIP_FEE_KES = 2000
+
+const MIME_EXTENSIONS: Record<string, string> = {
+  'image/jpeg': 'jpg',
+  'image/jpg': 'jpg',
+  'image/png': 'png',
+  'image/webp': 'webp',
+}
+
 export async function POST(req: NextRequest) {
   const session = await auth()
   if (!session?.user?.id) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const ip = req.headers.get('x-forwarded-for') ?? 'unknown'
   if (!checkRateLimit(`payment:${session.user.id}`, 3, 60_000)) {
     return NextResponse.json({ error: 'Too many submissions. Please wait.' }, { status: 429 })
   }
 
   const fd = await req.formData()
   const mpesaReference = normalizeMpesaCode(String(fd.get('mpesaReference') ?? ''))
-  const amount = Number(fd.get('amount') ?? 0)
   const month = String(fd.get('month') ?? '')
   const file = fd.get('screenshot') as File | null
 
   if (!mpesaReference || mpesaReference.length < 6) {
     return NextResponse.json({ error: 'Invalid M-Pesa reference.' }, { status: 400 })
-  }
-  if (amount <= 0) {
-    return NextResponse.json({ error: 'Invalid amount.' }, { status: 400 })
   }
 
   const supabase = createServiceClient()
@@ -42,14 +47,16 @@ export async function POST(req: NextRequest) {
 
   let screenshotPath: string | null = null
   if (file && file.size > 0) {
-    const uploadRes = await uploadPaymentScreenshot(session.user.id, file, file.type)
+    const ext = MIME_EXTENSIONS[file.type] ?? 'jpg'
+    const filename = `screenshot-${Date.now()}.${ext}`
+    const uploadRes = await uploadPaymentScreenshot(session.user.id, file, filename)
     if (uploadRes) screenshotPath = uploadRes
   }
 
   const { error } = await supabase.from('payments').insert({
     user_id: session.user.id,
     mpesa_reference: mpesaReference,
-    amount,
+    amount: MEMBERSHIP_FEE_KES,
     month,
     status: 'pending',
     screenshot_url: screenshotPath,

@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { createServiceClient } from '@/lib/supabase'
 import { hashPassword } from '@/lib/utils'
 import { sendWelcomeEmail } from '@/lib/emails'
-import { checkRateLimit, logSOCEvent } from '@/lib/security'
+import { checkRateLimit, getClientIP, logSOCEvent } from '@/lib/security'
 
 const schema = z.object({
   fullName: z.string().min(2).max(80),
@@ -12,7 +12,7 @@ const schema = z.object({
 })
 
 export async function POST(req: NextRequest) {
-  const ip = req.headers.get('x-forwarded-for') ?? 'unknown'
+  const ip = getClientIP(req)
 
   if (!checkRateLimit(`register:${ip}`, 5, 60_000)) {
     return NextResponse.json({ error: 'Too many requests. Please wait a moment.' }, { status: 429 })

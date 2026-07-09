@@ -2,6 +2,7 @@ import NextAuth from 'next-auth'
 import { authConfig } from '@/lib/auth.config'
 import { NextRequest, NextResponse } from 'next/server'
 import type { Session } from 'next-auth'
+import { getClientIP } from '@/lib/security'
 
 const { auth } = NextAuth(authConfig)
 
@@ -46,7 +47,7 @@ const MEMBER_PATHS = ['/dashboard', '/courts', '/api/vote', '/api/user']
 const ADMIN_PATHS = ['/admin', '/api/admin']
 
 /** Auth pages (redirect away if already logged in) */
-const AUTH_PAGES = ['/auth/login', '/auth/register', '/auth/payment', '/auth/error']
+const AUTH_PAGES = ['/auth/login', '/auth/register', '/auth/error']
 
 function requiresMember(pathname: string): boolean {
   return MEMBER_PATHS.some(p => pathname === p || pathname.startsWith(p + '/') || pathname.startsWith(p + '?'))
@@ -66,6 +67,7 @@ function isAuthPage(pathname: string): boolean {
 // ─────────────────────────────────────────────────────────────────────────────
 
 interface Bucket { count: number; resetAt: number }
+// TODO: replace with Upstash Redis / Vercel KV for cross-instance rate limiting
 const rateBuckets = new Map<string, Bucket>()
 
 function edgeRateLimit(
@@ -86,14 +88,6 @@ function edgeRateLimit(
   return true
 }
 
-function getIP(req: NextRequest): string {
-  return (
-    req.headers.get('x-real-ip') ||
-    req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
-    '0.0.0.0'
-  )
-}
-
 // ─────────────────────────────────────────────────────────────────────────────
 // MIDDLEWARE
 // ─────────────────────────────────────────────────────────────────────────────
@@ -103,7 +97,7 @@ export default auth(async function middleware(
 ) {
   const { pathname } = req.nextUrl
   const session = req.auth
-  const ip = getIP(req)
+  const ip = getClientIP(req)
 
   // ── 1. Honeypot detection ──────────────────────────────────────────────────
   if (isHoneypotPath(pathname)) {
