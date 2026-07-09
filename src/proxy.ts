@@ -174,26 +174,7 @@ export default auth(async function middleware(
 
   // ── 5. Redirect logged-in users away from auth pages ──────────────────────
   if (session && isAuthPage(pathname)) {
-    // If nickname not yet set, allow /auth/setup
-    if (!session.user?.nickname_set) {
-      if (pathname !== '/auth/setup') {
-        return NextResponse.redirect(new URL('/auth/setup', req.url))
-      }
-    } else {
-      return NextResponse.redirect(new URL('/dashboard', req.url))
-    }
-  }
-
-  // ── 6. Force /auth/setup for members who haven't picked a nickname ─────────
-  if (
-    session &&
-    !session.user?.nickname_set &&
-    !pathname.startsWith('/auth/setup') &&
-    !pathname.startsWith('/api/') &&
-    !pathname.startsWith('/auth/') &&
-    pathname !== '/'
-  ) {
-    return NextResponse.redirect(new URL('/auth/setup', req.url))
+    return NextResponse.redirect(new URL('/dashboard', req.url))
   }
 
   return NextResponse.next()

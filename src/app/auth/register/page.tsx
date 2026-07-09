@@ -52,7 +52,7 @@ export default function RegisterPage() {
         setError('Account created but sign-in failed. Please sign in manually.')
         router.push('/auth/login')
       } else {
-        router.push('/auth/setup')
+        router.push('/dashboard')
       }
     })
   }
@@ -126,7 +126,7 @@ export default function RegisterPage() {
           </div>
 
           <button
-            onClick={() => signIn('google', { callbackUrl: '/auth/setup' })}
+            onClick={() => signIn('google', { callbackUrl: '/dashboard' })}
             className="w-full py-3 rounded-lg border border-gray-200 text-sm font-medium text-navy hover:bg-gray-50 flex items-center justify-center gap-3 transition-colors"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24">
