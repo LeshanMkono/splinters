@@ -1,13 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 
 export default function SetupPage() {
-  const router = useRouter()
-  const { update } = useSession()
   const [nickname, setNickname] = useState('')
   const [checking, setChecking] = useState(false)
   const [available, setAvailable] = useState<boolean | null>(null)
@@ -32,14 +28,13 @@ export default function SetupPage() {
 
     setIsSaving(true)
 
-    let data: { success?: boolean; nickname?: string; error?: string }
     try {
       const res = await fetch('/api/user/set-nickname', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nickname }),
       })
-      data = await res.json()
+      const data: { success?: boolean; nickname?: string; error?: string } = await res.json()
       if (!res.ok) {
         setError(data.error || 'Failed to set nickname.')
         setIsSaving(false)
@@ -51,22 +46,11 @@ export default function SetupPage() {
       return
     }
 
-    // Refresh the session so the new nickname/nickname_set are available on
-    // /dashboard. If update() throws or isn't available, fall back to a
-    // router refresh so the redirect still gets a re-validated session.
-    try {
-      if (typeof update === 'function') {
-        await update({ nickname: data.nickname ?? nickname, nickname_set: true })
-      } else {
-        router.refresh()
-      }
-    } catch {
-      router.refresh()
-    }
-
     // Deliberately leave isSaving true — the page is navigating away, so the
     // button should keep showing "Saving…" until the redirect completes.
-    router.push('/dashboard?welcome=1')
+    // Hard redirect (not router.push) so the new session/user state is
+    // re-fetched from the server instead of relying on stale client session.
+    window.location.href = '/dashboard?welcome=1'
   }
 
   const inputClass =
