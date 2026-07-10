@@ -164,28 +164,19 @@ ALTER TABLE soc_events     ENABLE ROW LEVEL SECURITY;
 
 -- ── USERS policies ────────────────────────────────────────────────────────────
 
--- Public read of non-sensitive fields is handled at application layer.
--- RLS: users can read/update their own row; no client can update role field.
+-- Auth is handled by NextAuth, not Supabase Auth — auth.uid() is never
+-- populated. All authorization happens in API route handlers via the
+-- service-role client. This policy exists only to deny direct table access
+-- via the anon key.
 
-CREATE POLICY "users_select_own" ON users
-  FOR SELECT USING (auth.uid()::text = id::text OR TRUE);
-  -- Any authenticated user can see basic profiles (avatar, nickname).
-  -- Sensitive fields are filtered at API layer.
+CREATE POLICY "users_deny_all_direct_access" ON users
+  FOR ALL USING (FALSE);
 
 CREATE POLICY "users_update_own" ON users
   FOR UPDATE USING (auth.uid()::text = id::text)
   WITH CHECK (
     auth.uid()::text = id::text
     -- role cannot be changed by the user themselves (enforced below)
-  );
-
--- Prevent users from updating their own role
-CREATE POLICY "users_no_self_role_update" ON users
-  AS RESTRICTIVE
-  FOR UPDATE USING (TRUE)
-  WITH CHECK (
-    -- This will be enforced at API layer; RLS here as belt-and-suspenders.
-    TRUE
   );
 
 -- ── PAYMENTS policies ─────────────────────────────────────────────────────────
@@ -253,18 +244,12 @@ VALUES (
 )
 ON CONFLICT (id) DO NOTHING;
 
--- Storage policy: users upload their own screenshots, admins can read all
-CREATE POLICY "payment_screenshots_upload_own" ON storage.objects
-  FOR INSERT WITH CHECK (
-    bucket_id = 'payment-screenshots'
-    AND auth.uid()::text = (storage.foldername(name))[1]
-  );
-
-CREATE POLICY "payment_screenshots_select_own" ON storage.objects
-  FOR SELECT USING (
-    bucket_id = 'payment-screenshots'
-    AND auth.uid()::text = (storage.foldername(name))[1]
-  );
+-- Storage policy: auth is handled by NextAuth, not Supabase Auth, so
+-- auth.uid() is never populated here. Uploads and signed URLs already go
+-- through the service-role client in src/lib/supabase.ts — this policy
+-- exists only to deny direct storage access via the anon key.
+CREATE POLICY "payment_screenshots_deny_all_direct_access" ON storage.objects
+  FOR ALL USING (bucket_id = 'payment-screenshots' AND FALSE);
 
 -- ═══════════════════════════════════════════════════════════════════════════
 -- HELPER FUNCTIONS

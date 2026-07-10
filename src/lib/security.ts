@@ -2,6 +2,23 @@ import { createServiceClient } from './supabase'
 import { sendSecurityAlertEmail } from './emails'
 
 // ─────────────────────────────────────────────────────────────────────────────
+// CLIENT IP RESOLUTION
+// Shared by proxy.ts (edge middleware) and auth.ts (Credentials authorize()),
+// so the two never drift into different notions of "the client IP".
+// ─────────────────────────────────────────────────────────────────────────────
+
+export function getClientIP(req: Request): string {
+  // x-vercel-forwarded-for is set by Vercel's edge network itself and can't
+  // be spoofed by the client the way a raw x-forwarded-for header can.
+  return (
+    req.headers.get('x-vercel-forwarded-for')?.split(',')[0]?.trim() ||
+    req.headers.get('x-real-ip') ||
+    req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+    '0.0.0.0'
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // IP HASHING — SHA-256 + NEXTAUTH_SECRET salt (Web Crypto, Edge-compatible)
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -224,6 +241,7 @@ interface RateBucket {
   resetAt: number
 }
 
+// TODO: replace with Upstash Redis / Vercel KV for cross-instance rate limiting
 const rateLimitStore = new Map<string, RateBucket>()
 
 export function checkRateLimit(

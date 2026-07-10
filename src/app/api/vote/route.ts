@@ -29,23 +29,22 @@ export async function POST(req: NextRequest) {
   // Check poll exists and is active
   const { data: poll } = await supabase
     .from('polls')
-    .select('id, is_active, requires_exclusive')
+    .select('id, is_active')
     .eq('id', pollId)
     .single()
 
   if (!poll) return NextResponse.json({ error: 'Poll not found' }, { status: 404 })
   if (!poll.is_active) return NextResponse.json({ error: 'Poll is closed' }, { status: 400 })
 
-  // Check exclusive access
-  if (poll.requires_exclusive) {
-    const { data: user } = await supabase
-      .from('users')
-      .select('membership_status')
-      .eq('id', session.user.id)
-      .single()
-    if (user?.membership_status !== 'active') {
-      return NextResponse.json({ error: 'Active membership required' }, { status: 403 })
-    }
+  // Voting on any poll requires an active membership, not just exclusive
+  // ones — guests without a confirmed payment can't vote at all.
+  const { data: user } = await supabase
+    .from('users')
+    .select('membership_status')
+    .eq('id', session.user.id)
+    .single()
+  if (user?.membership_status !== 'active') {
+    return NextResponse.json({ error: 'Active membership required' }, { status: 403 })
   }
 
   // Upsert vote

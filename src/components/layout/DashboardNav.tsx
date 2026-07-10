@@ -54,11 +54,20 @@ export function DashboardNav({ session, user: userProp }: DashboardNavProps) {
 
           {/* Nav links */}
           <nav className="hidden md:flex items-center gap-6">
+            <Link href="/" className="text-sm font-medium text-white/70 hover:text-white transition-colors">
+              Home
+            </Link>
             <Link href="/dashboard" className="text-sm font-medium text-white/70 hover:text-white transition-colors">
               Dashboard
             </Link>
             <Link href="/courts" className="text-sm font-medium text-white/70 hover:text-white transition-colors">
               Courts
+            </Link>
+            <Link href="/#schedule" className="text-sm font-medium text-white/70 hover:text-white transition-colors">
+              Schedule
+            </Link>
+            <Link href="/#about" className="text-sm font-medium text-white/70 hover:text-white transition-colors">
+              About
             </Link>
             {user.role === 'admin' && (
               <Link href="/admin" className="text-sm font-medium text-orange hover:text-orange-light transition-colors flex items-center gap-1">

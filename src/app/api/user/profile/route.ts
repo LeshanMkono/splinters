@@ -13,7 +13,15 @@ export async function GET() {
   if (!session?.user?.id) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const supabase = createServiceClient()
-  const { data, error } = await supabase.from('users').select('*').eq('id', session.user.id).single()
+  const { data, error } = await supabase
+    .from('users')
+    .select(
+      'id, email, full_name, nickname, avatar_url, role, membership_status, ' +
+      'membership_expires_at, phone_number, whatsapp_requested, whatsapp_approved, ' +
+      'instagram_handle, tiktok_handle, twitter_handle'
+    )
+    .eq('id', session.user.id)
+    .single()
   if (error) return NextResponse.json({ error: 'User not found' }, { status: 404 })
   return NextResponse.json({ user: data })
 }
