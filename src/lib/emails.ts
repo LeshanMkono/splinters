@@ -358,3 +358,53 @@ export async function sendPaymentRejectedEmail(
     html: emailWrapper('Payment Not Confirmed', body),
   })
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 8. BIG 30 RSVP — birthday invite response (splinters.co.ke/big30), to the host
+// ─────────────────────────────────────────────────────────────────────────────
+
+const HTML_ESCAPES: Record<string, string> = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;',
+}
+
+function esc(value: string): string {
+  return value.replace(/[&<>"']/g, ch => HTML_ESCAPES[ch])
+}
+
+export interface Big30Rsvp {
+  name: string
+  phone: string
+  email: string
+  submittedAt: string
+}
+
+export async function sendBig30RsvpEmail(rsvp: Big30Rsvp): Promise<void> {
+  const host =
+    process.env.ADMIN_GENERAL_EMAIL ||
+    process.env.ADMIN_SECURITY_EMAIL ||
+    'mkonodigital@gmail.com'
+
+  const body = `
+    ${h1('New RSVP — Big 30 🎉')}
+    ${p('Someone just RSVP&rsquo;d through <strong>splinters.co.ke/big30</strong>.')}
+    ${infoBox([
+      ['Name', esc(rsvp.name)],
+      ['Phone', esc(rsvp.phone)],
+      ['Email', esc(rsvp.email)],
+      ['Submitted', esc(rsvp.submittedAt)],
+    ])}
+    ${p('Reply straight to this email to reach them.', 'font-size:13px;color:#6B7280;')}
+  `
+
+  await getResend().emails.send({
+    from: FROM,
+    to: host,
+    replyTo: rsvp.email,
+    subject: `🎉 Big 30 RSVP — ${rsvp.name}`,
+    html: emailWrapper('New RSVP — Big 30', body),
+  })
+}

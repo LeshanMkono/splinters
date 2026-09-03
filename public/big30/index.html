@@ -205,6 +205,31 @@
   .rsvp .by{margin-top:16px;font-size:13.5px;color:var(--ink);font-weight:500;}
   .rsvp .by b{color:var(--white);}
 
+  .rsvp form{display:grid;gap:14px;max-width:340px;margin:0 auto;text-align:left;}
+  .rsvp .field{display:grid;gap:6px;}
+  .rsvp label{
+    font-size:12px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;
+    color:var(--blue-bright);
+  }
+  .rsvp input{
+    width:100%;font:inherit;font-size:16px;color:var(--white);
+    background:var(--navy-3);
+    border:1px solid rgba(95,168,255,.4);border-radius:12px;
+    padding:13px 15px;outline:none;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  .rsvp input::placeholder{color:rgba(234,241,255,.42);}
+  .rsvp input:focus{
+    border-color:var(--blue);
+    box-shadow:0 0 0 3px rgba(46,139,255,.25);
+  }
+  .rsvp .cta{margin-top:4px;width:100%;}
+  .rsvp .cta:disabled{opacity:.6;cursor:default;transform:none;box-shadow:0 4px 16px rgba(46,139,255,.3);}
+  .rsvp .form-msg{margin:0;font-size:13.5px;font-weight:600;color:var(--gold);}
+  .rsvp .form-msg:empty{display:none;}
+  .rsvp .form-msg.err{color:#ff9b9b;}
+  .rsvp .rsvp-done{margin:6px 0 0;font-size:16px;font-weight:700;color:var(--white);}
+
   /* footer / partnership */
   footer{
     background:var(--navy-0);
@@ -382,8 +407,23 @@
 
     <section class="panel alt rsvp">
       <h2 class="section-title">RSVP</h2>
-      <p>Let me know you're pulling up so we save you a seat at the bar.</p>
-      <button class="cta" id="rsvpBtn">Count me in →</button>
+      <p>Drop your details and I&rsquo;ll save you a seat at the bar.</p>
+      <form id="rsvpForm" novalidate>
+        <div class="field">
+          <label for="rsvpName">Name</label>
+          <input id="rsvpName" type="text" autocomplete="name" required maxlength="80" placeholder="Your name" />
+        </div>
+        <div class="field">
+          <label for="rsvpPhone">Phone</label>
+          <input id="rsvpPhone" type="tel" inputmode="tel" autocomplete="tel" required maxlength="20" placeholder="07xx xxx xxx" />
+        </div>
+        <div class="field">
+          <label for="rsvpEmail">Email</label>
+          <input id="rsvpEmail" type="email" inputmode="email" autocomplete="email" required maxlength="120" placeholder="you@example.com" />
+        </div>
+        <p class="form-msg" id="rsvpMsg" role="status" aria-live="polite"></p>
+        <button class="cta" id="rsvpBtn" type="submit">Count me in →</button>
+      </form>
       <div class="by">RSVP by <b>Wednesday, 3 September</b></div>
     </section>
 
@@ -476,13 +516,68 @@
     fire(r.left+r.width/2, r.top+r.height/2, 70);
   });
 
-  // RSVP button
-  document.getElementById('rsvpBtn').addEventListener('click', function(){
-    fire(window.innerWidth/2, window.innerHeight*0.6, 120);
-    var b=this; b.textContent='See you there ✦';
-    b.style.background='linear-gradient(180deg,#F2C14E,#d99f2b)';
-    b.style.color='#071634';
-  });
+  // RSVP form → POST to /api/big30/rsvp (emails the host)
+  var rsvpForm = document.getElementById('rsvpForm');
+  var rsvpBtn  = document.getElementById('rsvpBtn');
+  var rsvpMsg  = document.getElementById('rsvpMsg');
+  var EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
+  function showErr(text){
+    rsvpMsg.textContent = text;
+    rsvpMsg.className = 'form-msg err';
+  }
+
+  if (rsvpForm){
+    rsvpForm.addEventListener('submit', function(e){
+      e.preventDefault();
+
+      var name  = document.getElementById('rsvpName').value.trim();
+      var phone = document.getElementById('rsvpPhone').value.trim();
+      var email = document.getElementById('rsvpEmail').value.trim();
+
+      rsvpMsg.textContent = '';
+      rsvpMsg.className = 'form-msg';
+
+      if (name.length < 2)              { showErr('Please enter your name.'); return; }
+      if (phone.replace(/\D/g,'').length < 7) { showErr('Please enter a valid phone number.'); return; }
+      if (!EMAIL_RE.test(email))        { showErr('Please enter a valid email.'); return; }
+
+      var original = rsvpBtn.textContent;
+      rsvpBtn.disabled = true;
+      rsvpBtn.textContent = 'Sending…';
+
+      fetch('/api/big30/rsvp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name, phone: phone, email: email })
+      })
+      .then(function(r){
+        return r.json().catch(function(){ return {}; }).then(function(data){
+          return { ok: r.ok, data: data };
+        });
+      })
+      .then(function(res){
+        if (res.ok && res.data && res.data.success){
+          var first = name.split(' ')[0] || 'friend';
+          var done = document.createElement('p');
+          done.className = 'rsvp-done';
+          done.textContent = 'You’re on the list, ' + first + '. See you there ✦';
+          rsvpForm.textContent = '';
+          rsvpForm.appendChild(done);
+          fire(window.innerWidth/2, window.innerHeight*0.6, 120);
+        } else {
+          rsvpBtn.disabled = false;
+          rsvpBtn.textContent = original;
+          showErr((res.data && res.data.error) || 'Something went wrong. Please try again.');
+        }
+      })
+      .catch(function(){
+        rsvpBtn.disabled = false;
+        rsvpBtn.textContent = original;
+        showErr('Network error. Please try again.');
+      });
+    });
+  }
 })();
 </script>
 </body>

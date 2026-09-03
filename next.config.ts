@@ -42,6 +42,12 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    // The birthday invite is a static file at public/big30/index.html.
+    // Next.js only serves it at /big30/index.html by default; map the clean
+    // /big30 URL onto it. (/big30/ 308-redirects to /big30, then rewrites.)
+    return [{ source: "/big30", destination: "/big30/index.html" }];
+  },
   async headers() {
     return [
       {
