@@ -19,6 +19,7 @@ export function Footer() {
           <p className="font-mono text-xs uppercase tracking-widest text-white/40 mb-4">Community</p>
           <ul className="space-y-2.5 text-sm text-white/70">
             <li><Link href="/courts" className="hover:text-orange transition-colors">Find Courts</Link></li>
+            <li><Link href="/blog" className="hover:text-orange transition-colors">Blog</Link></li>
             <li><Link href="/#about" className="hover:text-orange transition-colors">About Splinters</Link></li>
             <li><Link href="/#schedule" className="hover:text-orange transition-colors">Schedule</Link></li>
             <li>
