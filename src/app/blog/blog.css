@@ -245,6 +245,13 @@
   color: #000000;
   font-weight: 700;
 }
+.blog-cta__addr + .blog-cta__addr { margin-top: 0.5rem; }
+.blog-cta__addr a {
+  color: #000000;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.blog-cta__addr a:hover { color: #122072; }
 
 /* ── Back / breadcrumb ───────────────────────────────────────────────────── */
 .blog-crumb {

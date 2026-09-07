@@ -5,6 +5,11 @@ import { getPost, getPostSlugs, type BlogPost } from '@/lib/blog'
 
 const SITE = 'https://splinters.co.ke'
 
+// Canonical Google Business Profile URL (CID form) for the Splinters / The Home
+// Crowd listing — resolved from the share.google shortlink, stored as the stable
+// maps?cid= URL rather than the shortlink.
+const GOOGLE_BUSINESS_URL = 'https://www.google.com/maps?cid=13874736067324399768'
+
 export function generateStaticParams() {
   return getPostSlugs().map((slug) => ({ slug }))
 }
@@ -81,6 +86,7 @@ function buildLocalBusinessSchema(post: BlogPost) {
     },
     brand: { '@type': 'Brand', name: 'The Home Crowd' },
     containedInPlace: { '@type': 'Hotel', name: 'Hyatt Regency Nairobi' },
+    sameAs: [GOOGLE_BUSINESS_URL],
     amenityFeature: [
       { '@type': 'LocationFeatureSpecification', name: 'Live sport on big screens', value: true },
       { '@type': 'LocationFeatureSpecification', name: 'Pool tables', value: true },
@@ -210,6 +216,11 @@ export default async function BlogPostPage({
           </a>
           <p className="blog-cta__addr">
             📍 District 6 Sports Bar · Hyatt Regency Nairobi, Westlands · +254 798 631 925
+          </p>
+          <p className="blog-cta__addr">
+            <a href={GOOGLE_BUSINESS_URL} target="_blank" rel="noopener noreferrer">
+              Find us on Google Maps →
+            </a>
           </p>
         </div>
       </section>

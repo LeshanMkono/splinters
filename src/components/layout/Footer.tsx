@@ -23,6 +23,11 @@ export function Footer() {
             <li><Link href="/#about" className="hover:text-orange transition-colors">About Splinters</Link></li>
             <li><Link href="/#schedule" className="hover:text-orange transition-colors">Schedule</Link></li>
             <li>
+              <a href="https://www.google.com/maps?cid=13874736067324399768" target="_blank" rel="noopener noreferrer" className="hover:text-orange transition-colors">
+                Find us on Google
+              </a>
+            </li>
+            <li>
               <a href="https://kbf.co.ke" target="_blank" rel="noopener noreferrer" className="hover:text-orange transition-colors">
                 Kenya Basketball Federation
               </a>
