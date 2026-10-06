@@ -115,6 +115,60 @@ function buildFaqSchema(post: BlogPost) {
   }
 }
 
+function buildArticleSchema(post: BlogPost) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.metaDescription,
+    image: [`${SITE}${post.ogImage}`],
+    datePublished: post.date,
+    dateModified: post.date,
+    author: { '@type': 'Person', name: post.author },
+    publisher: {
+      '@type': 'Organization',
+      name: 'The Home Crowd',
+      logo: { '@type': 'ImageObject', url: `${SITE}/splinters-logo.jpg` },
+    },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE}/blog/${post.slug}` },
+  }
+}
+
+function buildEventSchema(post: BlogPost) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Event',
+    name: post.title,
+    startDate: post.eventStart,
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    eventStatus: 'https://schema.org/EventScheduled',
+    location: {
+      '@type': 'Place',
+      name: 'District 6 Sports Bar',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Hyatt Regency Nairobi, Muthithi Road, 6th Floor, Westlands',
+        addressLocality: 'Nairobi',
+        addressRegion: 'Nairobi',
+        addressCountry: 'KE',
+      },
+    },
+    image: [`${SITE}${post.ogImage}`],
+    description: post.metaDescription,
+    organizer: { '@type': 'Organization', name: 'The Home Crowd', url: SITE },
+    offers: post.eventPrice
+      ? {
+          '@type': 'Offer',
+          price: post.eventPrice,
+          priceCurrency: 'KES',
+          availability: 'https://schema.org/InStock',
+          // MTICKETS LINK GOES HERE — swap for the real mTickets checkout URL once it's live.
+          url: `${SITE}/blog/${post.slug}`,
+        }
+      : undefined,
+  }
+}
+
 export default async function BlogPostPage({
   params,
 }: {
@@ -139,14 +193,30 @@ export default async function BlogPostPage({
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildLocalBusinessSchema(post)) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqSchema(post)) }}
-      />
+      {post.schema.includes('LocalBusiness') && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildLocalBusinessSchema(post)) }}
+        />
+      )}
+      {post.schema.includes('Article') && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildArticleSchema(post)) }}
+        />
+      )}
+      {post.schema.includes('Event') && post.eventStart && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildEventSchema(post)) }}
+        />
+      )}
+      {post.schema.includes('FAQPage') && post.faqs.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqSchema(post)) }}
+        />
+      )}
 
       <header className="blog-hero">
         <div className="blog-hero__inner">

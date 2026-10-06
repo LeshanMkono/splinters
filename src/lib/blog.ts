@@ -26,6 +26,10 @@ export interface BlogPost {
   heroAlt: string
   ogImage: string
   telephone: string
+  /** ISO 8601 start time, for Event schema (e.g. watch parties). Optional. */
+  eventStart?: string
+  /** Ticket price in KES, for Event schema Offer. Optional. */
+  eventPrice?: string
   /** Rendered HTML for the body, with the leading H1 removed (rendered separately). */
   html: string
   /** Q&As extracted from the "Frequently asked questions" section, for FAQPage schema. */
@@ -139,6 +143,8 @@ export function getPost(slug: string): BlogPost | null {
     heroAlt: String(data.hero_alt ?? ''),
     ogImage: String(data.og_image ?? data.hero_image ?? ''),
     telephone: String(data.telephone ?? ''),
+    eventStart: data.event_start ? String(data.event_start) : undefined,
+    eventPrice: data.event_price ? String(data.event_price) : undefined,
     html,
     faqs: extractFaqs(content),
     readingMinutes,
