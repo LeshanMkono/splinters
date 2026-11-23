@@ -6,14 +6,13 @@ import Image from 'next/image'
 
 const SLIDES = [
   { id: 0, src: '/images/hero-1.jpg', label: 'Olive Crescent · Kileleshwa · Saturday 5PM' },
-  { id: 1, src: '/images/hero-2.jpg', label: 'NIS Lavington · Parklands Sports Club · Sunday 6PM' },
+  { id: 1, src: '/images/hero-2.jpg', label: 'Parklands Sports Club · Sunday 6PM' },
   { id: 2, src: '/images/hero-3.jpg', label: 'Splinters Basketball · Nairobi · Every Weekend' },
 ]
 
 const GALLERY = [
   { src: '/images/court-1.jpg', district: 'Kileleshwa · Saturday 5PM', name: 'Olive Crescent International School' },
   { src: '/images/court-2.jpg', district: 'Parklands · Sunday 6PM', name: 'Parklands Sports Club' },
-  { src: '/images/court-3.jpg', district: 'Lavington · Exclusive Members', name: 'Nairobi International School' },
 ]
 
 export default function HomePage() {
@@ -58,6 +57,7 @@ export default function HomePage() {
               <a href={`#${item.toLowerCase()}`} className="block px-7 py-4 text-[15px] font-medium text-gray-800 hover:text-[#F4622A] transition-colors" onClick={() => setSidebarOpen(false)}>{item}</a>
             </li>
           ))}
+          <li className="border-b border-gray-100"><Link href="/blog" className="block px-7 py-4 text-[15px] font-medium text-gray-800 hover:text-[#F4622A]" onClick={() => setSidebarOpen(false)}>Blog</Link></li>
           <li className="border-b border-gray-100"><Link href="/auth/register" className="block px-7 py-4 text-[15px] font-medium text-gray-800 hover:text-[#F4622A]" onClick={() => setSidebarOpen(false)}>Join Free</Link></li>
         </ul>
         <div className="p-7 flex flex-col gap-3">
@@ -81,6 +81,12 @@ export default function HomePage() {
                 </a>
               </li>
             ))}
+            <li>
+              <Link href="/blog" className="block px-3.5 py-2 text-[13px] font-medium text-gray-500 hover:text-[#1B2B6B] transition-colors relative group">
+                Blog
+                <span className="absolute bottom-0.5 left-3.5 right-3.5 h-0.5 bg-[#F4622A] scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+              </Link>
+            </li>
           </ul>
           <div className="hidden md:flex items-center gap-2.5 ml-auto">
             <Link href="/auth/login" className="px-[18px] py-2 text-[13px] font-medium text-[#1B2B6B] border-[1.5px] border-gray-200 hover:border-[#1B2B6B] transition-colors">Sign In</Link>
@@ -128,7 +134,7 @@ export default function HomePage() {
                 FIND YOUR<br /><span className="text-[#F4622A]">COURT.</span>
               </h1>
               <p className="text-white/65 text-[15px] leading-[1.75] mb-7 max-w-[480px]">
-                31 verified basketball courts across Nairobi. Weekend runs every Saturday at 5PM and Sunday at 6PM. Join the community.
+                Find basketball courts across Nairobi. Weekend runs every Saturday at 5PM and Sunday at 6PM. Join the community.
               </p>
               <div className="flex gap-3 flex-wrap">
                 <Link href="/auth/register" className="inline-block px-8 py-3.5 bg-[#F4622A] text-white text-[13px] font-bold tracking-[0.07em] uppercase hover:bg-[#D4501F] transition-colors">Join Free →</Link>
@@ -142,7 +148,7 @@ export default function HomePage() {
           <div className="inline-flex" style={{animation:'scroll 24s linear infinite'}}>
             {[...Array(2)].map((_, rep) => (
               <span key={rep} className="inline-flex">
-                {['🏀 Saturday 5PM · Olive Crescent, Kileleshwa','Sunday 6PM · Parklands or NIS Lavington','KES 2,000 / month','31 courts mapped across Nairobi','M-Pesa Paybill 880100 · payslinters25','Supporting Kenya Basketball Federation'].map((item, i) => (
+                {['🏀 Saturday 5PM · Olive Crescent, Kileleshwa','Sunday 6PM · Parklands Sports Club','KES 2,000 / month','Court map for members','M-Pesa Paybill 880100 · payslinters25','Supporting Kenya Basketball Federation'].map((item, i) => (
                   <span key={i} className="inline-flex items-center gap-3.5 px-9" style={{fontFamily:'var(--font-mono), monospace', fontSize:'10px', letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(255,255,255,0.7)'}}>
                     {item}<span className="w-1 h-1 rounded-full bg-white/25 flex-shrink-0" />
                   </span>
@@ -163,7 +169,7 @@ export default function HomePage() {
                   WE CONNECT PEOPLE TO BASKETBALL <span className="text-[#F4622A]">COURTS</span> NEAR THEM
                 </h2>
                 <p className="text-[15px] text-gray-500 leading-[1.8] mb-8 max-w-[480px]">
-                  Splinters maps 31 verified basketball courts across Nairobi. Members get access to weekly polls, the court map, and a community of ballers who show up every Saturday at 5PM and Sunday at 6PM, rain or shine.
+                  Splinters maps basketball courts across Nairobi. Members get access to weekly polls, the court map, and a community of ballers who show up every Saturday at 5PM and Sunday at 6PM, rain or shine.
                 </p>
                 <div className="flex gap-3 flex-wrap">
                   <Link href="/auth/register" className="inline-block px-7 py-3 bg-[#F4622A] text-white text-[13px] font-bold tracking-[0.05em] uppercase hover:bg-[#D4501F] transition-colors">Register for Free</Link>
@@ -174,7 +180,7 @@ export default function HomePage() {
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-0.5 bg-gray-200">
-                {[{num:'31',label:'Courts Mapped'},{num:'8',label:'Districts'},{num:'2',label:'Runs / Weekend'},{num:'2025',label:'Est. Nairobi'}].map(s => (
+                {[{num:'5PM',label:'Saturday Tip-off'},{num:'6PM',label:'Sunday Tip-off'},{num:'2',label:'Runs / Weekend'},{num:'2025',label:'Est. Nairobi'}].map(s => (
                   <div key={s.label} className="bg-white p-8">
                     <div style={{fontFamily:'var(--font-bebas), sans-serif', fontSize:'52px', letterSpacing:'0.02em', color:'#F4622A', lineHeight:1}}>{s.num}</div>
                     <div style={{fontFamily:'var(--font-mono), monospace', fontSize:'9px', letterSpacing:'0.18em', textTransform:'uppercase', color:'#888', marginTop:'6px'}}>{s.label}</div>
@@ -194,7 +200,7 @@ export default function HomePage() {
               WHERE <span className="text-[#F4622A]">WE RUN</span>
             </h2>
             <div className="grid md:grid-cols-2 gap-0.5">
-              {[{day:'Every Saturday',time:'5:00 PM',venue:'Olive Crescent International School',loc:'Kileleshwa, Nairobi'},{day:'Every Sunday',time:'6:00 PM',venue:'Parklands Sports Club / NIS Lavington',loc:'Rotating weekly · Check the poll'}].map(s => (
+              {[{day:'Every Saturday',time:'5:00 PM',venue:'Olive Crescent International School',loc:'Kileleshwa, Nairobi'},{day:'Every Sunday',time:'6:00 PM',venue:'Parklands Sports Club',loc:'Parklands, Nairobi · Confirm in the weekly poll'}].map(s => (
                 <div key={s.day} className="p-9 border border-white/10 bg-white/[0.03]">
                   <p style={{fontFamily:'var(--font-mono), monospace', fontSize:'10px', letterSpacing:'0.2em', textTransform:'uppercase', color:'#F4622A', marginBottom:'12px'}}>{s.day}</p>
                   <p className="text-white leading-none mb-2" style={{fontFamily:'var(--font-bebas), sans-serif', fontSize:'48px', letterSpacing:'0.02em'}}>{s.time}</p>
@@ -213,7 +219,7 @@ export default function HomePage() {
             </p>
             <h2 style={{fontFamily:'var(--font-bebas), sans-serif', fontSize:'clamp(38px, 4.5vw, 58px)', letterSpacing:'0.02em', color:'#1B2B6B'}}>WHERE WE PLAY</h2>
           </div>
-          <div className="grid md:grid-cols-3 gap-[3px]">
+          <div className="grid md:grid-cols-2 gap-[3px]">
             {GALLERY.map((c, i) => (
               <div key={i} className="relative overflow-hidden group" style={{aspectRatio:'3/4'}}>
                 <Image
@@ -221,7 +227,7 @@ export default function HomePage() {
                   alt={c.name}
                   fill
                   loading="lazy"
-                  sizes="(max-width: 767px) 100vw, 33vw"
+                  sizes="(max-width: 767px) 100vw, 50vw"
                   className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{background:'linear-gradient(to top, rgba(10,10,40,0.92) 0%, transparent 52%)'}} />
@@ -277,9 +283,9 @@ export default function HomePage() {
               </div>
               <div className="flex gap-14 flex-wrap">
                 {[
-                  {title:'Courts', links:[['Olive Crescent','#'],['Parklands Sports Club','#'],['NIS Lavington','#'],['View All 31 Courts','#']]},
-                  {title:'Community', links:[['Weekend Poll','/poll'],['Join WhatsApp','https://chat.whatsapp.com/E7QXYugRtYACCBkssPtGKS'],['Dashboard','/dashboard'],['Membership','/auth/register']]},
-                  {title:'Kenya Basketball', links:[['KBF Official','https://kenyabasketballfederation.org'],['About Splinters','#about'],['Contact','mailto:basketballsplinter@gmail.com'],['Privacy','/privacy']]},
+                  {title:'Explore', links:[['Find Courts','/courts'],['Weekly Schedule','#schedule'],['Blog','/blog'],['Find us on Google','https://www.google.com/maps?cid=13874736067324399768']]},
+                  {title:'Community', links:[['Weekend Poll','/dashboard'],['Join WhatsApp','https://chat.whatsapp.com/E7QXYugRtYACCBkssPtGKS'],['Dashboard','/dashboard'],['Membership','/auth/register']]},
+                  {title:'Kenya Basketball', links:[['Kenya Basketball (FIBA)','https://about.fiba.basketball/en/national-federations/88-kenya'],['About Splinters','#about'],['Contact','mailto:basketballsplinter@gmail.com']]},
                 ].map(col => (
                   <div key={col.title}>
                     <p className="mb-4" style={{fontFamily:'var(--font-mono), monospace', fontSize:'9px', letterSpacing:'0.2em', textTransform:'uppercase', color:'rgba(255,255,255,0.5)'}}>{col.title}</p>
@@ -293,7 +299,7 @@ export default function HomePage() {
               </div>
             </div>
             <div className="border-t border-white/10 pt-6 flex flex-wrap justify-between items-center gap-4">
-              <p className="text-[12px] text-white/30">© 2025 Splinters Basketball · Nairobi, Kenya · <a href="mailto:basketballsplinter@gmail.com" className="text-[#F4622A] hover:underline">basketballsplinter@gmail.com</a></p>
+              <p className="text-[12px] text-white/30">© {new Date().getFullYear()} Splinters Basketball · Nairobi, Kenya · <a href="mailto:basketballsplinter@gmail.com" className="text-[#F4622A] hover:underline">basketballsplinter@gmail.com</a></p>
               <div className="flex items-center gap-5 flex-wrap">
                 {[{label:'M-Pesa Paybill',val:'880100'},{label:'Account',val:'payslinters25'},{label:'Monthly',val:'KES 2,000'}].map((item, i) => (
                   <div key={item.label} className="flex items-center gap-2">

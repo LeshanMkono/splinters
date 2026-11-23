@@ -11,7 +11,7 @@ export function Footer() {
             <span className="font-display text-xl tracking-widest">SPLINTERS</span>
           </div>
           <p className="text-sm text-white/60 leading-relaxed max-w-xs">
-            Nairobi&apos;s pickup basketball community. Every Saturday &amp; Sunday at Olive Crescent, Kileleshwa.
+            Nairobi&apos;s pickup basketball community. Saturdays 5PM at Olive Crescent, Kileleshwa. Sundays 6PM at Parklands Sports Club.
           </p>
         </div>
 
@@ -28,7 +28,7 @@ export function Footer() {
               </a>
             </li>
             <li>
-              <a href="https://kbf.co.ke" target="_blank" rel="noopener noreferrer" className="hover:text-orange transition-colors">
+              <a href="https://about.fiba.basketball/en/national-federations/88-kenya" target="_blank" rel="noopener noreferrer" className="hover:text-orange transition-colors">
                 Kenya Basketball Federation
               </a>
             </li>
