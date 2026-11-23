@@ -9,6 +9,9 @@ import Image from 'next/image'
 
 export const dynamic = 'force-dynamic'
 
+// NIS is a private, members-only venue: keep it off the public map until the owner approves a pin.
+const PUBLIC_COURTS = COURTS.filter(c => c.id !== 'nis-lavington')
+
 export default async function CourtsPage() {
   const session = await auth()
   const isLoggedIn = !!session?.user
@@ -18,7 +21,7 @@ export default async function CourtsPage() {
       <PublicNav />
       <main className="min-h-screen">
         {isLoggedIn ? (
-          <CourtsMapClient courts={COURTS} />
+          <CourtsMapClient courts={PUBLIC_COURTS} />
         ) : (
           <AnonymousCourtsView />
         )}
@@ -45,7 +48,7 @@ function AnonymousCourtsView() {
             <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-5">
               <Lock className="w-8 h-8 text-white" />
             </div>
-            <h2 className="font-display text-4xl sm:text-5xl mb-3 tracking-wide">31 NAIROBI COURTS</h2>
+            <h2 className="font-display text-4xl sm:text-5xl mb-3 tracking-wide">NAIROBI COURTS MAP</h2>
             <p className="text-white/70 text-sm mb-8 max-w-sm mx-auto">
               Sign in to see all courts, get directions, and plan your next game.
             </p>
@@ -70,8 +73,8 @@ function AnonymousCourtsView() {
       {/* Teaser grid */}
       <section className="max-w-5xl mx-auto px-6 py-12">
         <h3 className="font-display text-2xl text-navy mb-6">FEATURED COURTS</h3>
-        <div className="grid sm:grid-cols-3 gap-4">
-          {['Olive Crescent International School', 'Parklands Sports Club', 'NIS Lavington'].map(name => (
+        <div className="grid sm:grid-cols-2 gap-4">
+          {['Olive Crescent International School', 'Parklands Sports Club'].map(name => (
             <div key={name} className="bg-white rounded-xl border border-gray-100 p-5">
               <div className="w-8 h-8 rounded bg-navy/5 flex items-center justify-center mb-3">
                 <Lock className="w-4 h-4 text-navy/40" />
